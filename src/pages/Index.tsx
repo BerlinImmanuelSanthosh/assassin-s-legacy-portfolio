@@ -1,5 +1,6 @@
 import CustomCursor from '@/components/CustomCursor';
 import ParticleBackground from '@/components/ParticleBackground';
+import AnimatedBackground from '@/components/AnimatedBackground';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/sections/HeroSection';
 import SummarySection from '@/components/sections/SummarySection';
@@ -18,6 +19,9 @@ const Index = () => {
       <div className="hidden md:block">
         <CustomCursor />
       </div>
+
+      {/* Animated background with parallax orbs */}
+      <AnimatedBackground />
 
       {/* Particle background */}
       <ParticleBackground />
