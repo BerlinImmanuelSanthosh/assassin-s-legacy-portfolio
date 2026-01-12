@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import TypewriterText from '../TypewriterText';
 import MagneticButton from '../MagneticButton';
-import { ChevronDown, Github, Linkedin, Mail } from 'lucide-react';
+import { ChevronDown, Linkedin, Mail } from 'lucide-react';
 
 const HeroSection = () => {
   const containerVariants = {
@@ -88,26 +88,19 @@ const HeroSection = () => {
           className="text-2xl md:text-3xl font-body text-muted-foreground mb-8 h-12"
         >
           <TypewriterText
-            texts={[
-              'AI/ML Engineer',
-              'Machine Learning Developer',
-              'Data Science Enthusiast',
-              'Full-Stack AI Builder',
-            ]}
+            texts={['AIML ENGINEER']}
             speed={80}
             deleteSpeed={40}
-            pauseDuration={2500}
+            pauseDuration={5000}
           />
         </motion.div>
 
-        {/* Description */}
+        {/* Summary from resume */}
         <motion.p
           variants={itemVariants}
-          className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10 font-body leading-relaxed"
+          className="text-lg text-muted-foreground max-w-3xl mx-auto mb-10 font-body leading-relaxed"
         >
-          Pre-final year B.Tech student specializing in AI and Data Science. 
-          Building intelligent systems that bridge the gap between human intuition 
-          and machine precision.
+          Pre-final year B.Tech student in AI and Data Science with experience in Python, JavaScript, and R for data analysis. Built AI projects, including a learning organizer chatbot that creates study plans, multilingual answers, and structured notes from one prompt.
         </motion.p>
 
         {/* CTA Buttons */}
@@ -115,8 +108,8 @@ const HeroSection = () => {
           variants={itemVariants}
           className="flex flex-wrap justify-center gap-4 mb-12"
         >
-          <MagneticButton onClick={() => scrollToSection('projects')}>
-            View Projects
+          <MagneticButton onClick={() => scrollToSection('project')}>
+            View Project
           </MagneticButton>
           <MagneticButton 
             href="mailto:j.berlin.santhosh@gmail.com"
@@ -134,7 +127,6 @@ const HeroSection = () => {
         >
           {[
             { icon: Linkedin, href: 'https://www.linkedin.com/in/berlin-imman', label: 'LinkedIn' },
-            { icon: Github, href: 'https://github.com', label: 'GitHub' },
             { icon: Mail, href: 'mailto:j.berlin.santhosh@gmail.com', label: 'Email' },
           ].map(({ icon: Icon, href, label }) => (
             <motion.a
@@ -161,7 +153,7 @@ const HeroSection = () => {
         transition={{ delay: 2, duration: 0.8 }}
       >
         <motion.button
-          onClick={() => scrollToSection('about')}
+          onClick={() => scrollToSection('summary')}
           className="flex flex-col items-center text-muted-foreground hover:text-primary transition-colors"
           animate={{ y: [0, 8, 0] }}
           transition={{ duration: 2, repeat: Infinity }}

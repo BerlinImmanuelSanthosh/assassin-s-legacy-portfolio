@@ -2,10 +2,12 @@ import CustomCursor from '@/components/CustomCursor';
 import ParticleBackground from '@/components/ParticleBackground';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/sections/HeroSection';
-import AboutSection from '@/components/sections/AboutSection';
-import SkillsSection from '@/components/sections/SkillsSection';
-import ProjectsSection from '@/components/sections/ProjectsSection';
+import SummarySection from '@/components/sections/SummarySection';
 import ExperienceSection from '@/components/sections/ExperienceSection';
+import CertificationsSection from '@/components/sections/CertificationsSection';
+import ProjectSection from '@/components/sections/ProjectSection';
+import TechnicalSkillsSection from '@/components/sections/TechnicalSkillsSection';
+import EducationSection from '@/components/sections/EducationSection';
 import ContactSection from '@/components/sections/ContactSection';
 import Footer from '@/components/Footer';
 
@@ -26,13 +28,15 @@ const Index = () => {
       {/* Navigation */}
       <Navbar />
 
-      {/* Main content */}
+      {/* Main content - Order matches resume exactly */}
       <main>
         <HeroSection />
-        <AboutSection />
-        <SkillsSection />
-        <ProjectsSection />
+        <SummarySection />
         <ExperienceSection />
+        <CertificationsSection />
+        <ProjectSection />
+        <TechnicalSkillsSection />
+        <EducationSection />
         <ContactSection />
       </main>
 
