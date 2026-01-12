@@ -29,7 +29,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
       {/* Background gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background pointer-events-none" />
 
@@ -123,7 +123,7 @@ const HeroSection = () => {
         {/* Social links */}
         <motion.div
           variants={itemVariants}
-          className="flex justify-center gap-6"
+          className="flex justify-center gap-6 mb-24"
         >
           {[
             { icon: Linkedin, href: 'https://www.linkedin.com/in/berlin-imman', label: 'LinkedIn' },
