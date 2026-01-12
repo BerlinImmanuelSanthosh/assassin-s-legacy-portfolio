@@ -7,10 +7,12 @@ const Navbar = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navItems = [
-    { label: 'About', href: '#about' },
-    { label: 'Skills', href: '#skills' },
-    { label: 'Projects', href: '#projects' },
+    { label: 'Summary', href: '#summary' },
     { label: 'Experience', href: '#experience' },
+    { label: 'Certifications', href: '#certifications' },
+    { label: 'Project', href: '#project' },
+    { label: 'Skills', href: '#technical-skills' },
+    { label: 'Education', href: '#education' },
     { label: 'Contact', href: '#contact' },
   ];
 
@@ -55,7 +57,7 @@ const Navbar = () => {
           </motion.a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-6">
             {navItems.map((item) => (
               <motion.button
                 key={item.label}
@@ -91,7 +93,7 @@ const Navbar = () => {
         className="fixed inset-0 z-40 md:hidden"
       >
         <div className="absolute inset-0 bg-background/95 backdrop-blur-lg" />
-        <div className="relative h-full flex flex-col items-center justify-center gap-8">
+        <div className="relative h-full flex flex-col items-center justify-center gap-6">
           {navItems.map((item, index) => (
             <motion.button
               key={item.label}
