@@ -6,52 +6,52 @@
 
 @layer base {
   :root {
-    /* Assassin's Creed Inspired - Dark Mode Primary */
-    --background: 0 0% 4%;
-    --foreground: 0 0% 95%;
+    /* Assassin's Creed White Theme */
+    --background: 0 0% 98%;
+    --foreground: 0 0% 8%;
 
-    --card: 0 0% 8%;
-    --card-foreground: 0 0% 95%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 8%;
 
-    --popover: 0 0% 6%;
-    --popover-foreground: 0 0% 95%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 8%;
 
     /* Deep Blood Red - Primary */
-    --primary: 0 85% 45%;
+    --primary: 0 85% 40%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 0 90% 50%;
+    --primary-glow: 0 90% 45%;
 
-    /* Soft Grey - Secondary */
-    --secondary: 0 0% 15%;
-    --secondary-foreground: 0 0% 90%;
+    /* Light Grey - Secondary */
+    --secondary: 0 0% 92%;
+    --secondary-foreground: 0 0% 15%;
 
-    /* Muted Dark Grey */
-    --muted: 0 0% 12%;
-    --muted-foreground: 0 0% 55%;
+    /* Muted Light Grey */
+    --muted: 0 0% 94%;
+    --muted-foreground: 0 0% 40%;
 
     /* Accent Red */
-    --accent: 0 80% 50%;
+    --accent: 0 80% 45%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 84.2% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 0 0% 18%;
-    --input: 0 0% 15%;
-    --ring: 0 85% 45%;
+    --border: 0 0% 88%;
+    --input: 0 0% 92%;
+    --ring: 0 85% 40%;
 
     --radius: 0.75rem;
 
     /* Custom Gradients */
-    --gradient-dark: linear-gradient(180deg, hsl(0 0% 4%) 0%, hsl(0 0% 8%) 100%);
-    --gradient-card: linear-gradient(135deg, hsl(0 0% 10% / 0.8) 0%, hsl(0 0% 6% / 0.9) 100%);
-    --gradient-red: linear-gradient(135deg, hsl(0 85% 45%) 0%, hsl(0 70% 35%) 100%);
-    --gradient-glow: radial-gradient(circle, hsl(0 85% 45% / 0.3) 0%, transparent 70%);
+    --gradient-light: linear-gradient(180deg, hsl(0 0% 98%) 0%, hsl(0 0% 94%) 100%);
+    --gradient-card: linear-gradient(135deg, hsl(0 0% 100% / 0.9) 0%, hsl(0 0% 96% / 0.95) 100%);
+    --gradient-red: linear-gradient(135deg, hsl(0 85% 40%) 0%, hsl(0 70% 30%) 100%);
+    --gradient-glow: radial-gradient(circle, hsl(0 85% 40% / 0.15) 0%, transparent 70%);
     
-    /* Glass Effect */
-    --glass-bg: hsl(0 0% 10% / 0.4);
-    --glass-border: hsl(0 0% 100% / 0.1);
-    --glass-shadow: 0 8px 32px hsl(0 0% 0% / 0.4);
+    /* Glass Effect - Light */
+    --glass-bg: hsl(0 0% 100% / 0.7);
+    --glass-border: hsl(0 0% 0% / 0.08);
+    --glass-shadow: 0 8px 32px hsl(0 0% 0% / 0.1);
 
     /* Fonts */
     --font-display: 'Bebas Neue', sans-serif;
@@ -59,18 +59,18 @@
     --font-mono: 'JetBrains Mono', monospace;
 
     /* Shadows */
-    --shadow-glow: 0 0 20px hsl(0 85% 45% / 0.4), 0 0 40px hsl(0 85% 45% / 0.2);
-    --shadow-card: 0 4px 30px hsl(0 0% 0% / 0.5);
-    --shadow-hover: 0 8px 40px hsl(0 85% 45% / 0.3);
+    --shadow-glow: 0 0 20px hsl(0 85% 40% / 0.3), 0 0 40px hsl(0 85% 40% / 0.15);
+    --shadow-card: 0 4px 30px hsl(0 0% 0% / 0.08);
+    --shadow-hover: 0 8px 40px hsl(0 85% 40% / 0.2);
 
-    --sidebar-background: 0 0% 6%;
-    --sidebar-foreground: 0 0% 90%;
-    --sidebar-primary: 0 85% 45%;
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 0 0% 15%;
+    --sidebar-primary: 0 85% 40%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 0 0% 12%;
-    --sidebar-accent-foreground: 0 0% 90%;
-    --sidebar-border: 0 0% 18%;
-    --sidebar-ring: 0 85% 45%;
+    --sidebar-accent: 0 0% 94%;
+    --sidebar-accent-foreground: 0 0% 15%;
+    --sidebar-border: 0 0% 88%;
+    --sidebar-ring: 0 85% 40%;
   }
 
   .dark {
@@ -142,7 +142,7 @@
 
   /* Glow Effects */
   .glow-text {
-    text-shadow: 0 0 10px hsl(0 85% 45% / 0.8), 0 0 30px hsl(0 85% 45% / 0.4);
+    text-shadow: 0 0 15px hsl(0 85% 40% / 0.6), 0 0 40px hsl(0 85% 40% / 0.3);
   }
 
   .glow-border {
@@ -175,16 +175,16 @@
   }
 
   ::-webkit-scrollbar-track {
-    background: hsl(0 0% 8%);
+    background: hsl(0 0% 94%);
   }
 
   ::-webkit-scrollbar-thumb {
-    background: hsl(0 85% 45% / 0.5);
+    background: hsl(0 85% 40% / 0.4);
     border-radius: 4px;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    background: hsl(0 85% 45% / 0.8);
+    background: hsl(0 85% 40% / 0.7);
   }
 
   /* Noise Texture Overlay */
@@ -203,14 +203,14 @@
 
 @layer utilities {
   .text-gradient {
-    background: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(0 0% 70%) 100%);
+    background: linear-gradient(135deg, hsl(0 0% 15%) 0%, hsl(0 0% 35%) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
 
   .text-gradient-red {
-    background: linear-gradient(135deg, hsl(0 85% 55%) 0%, hsl(0 85% 40%) 100%);
+    background: linear-gradient(135deg, hsl(0 85% 40%) 0%, hsl(0 85% 30%) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -218,8 +218,8 @@
 
   .bg-grid {
     background-image: 
-      linear-gradient(hsl(0 0% 20% / 0.1) 1px, transparent 1px),
-      linear-gradient(90deg, hsl(0 0% 20% / 0.1) 1px, transparent 1px);
+      linear-gradient(hsl(0 0% 0% / 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(0 0% 0% / 0.05) 1px, transparent 1px);
     background-size: 50px 50px;
   }
 }
