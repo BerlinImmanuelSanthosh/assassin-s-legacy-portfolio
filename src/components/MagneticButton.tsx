@@ -43,7 +43,7 @@ const MagneticButton = ({ children, className = '', onClick, href }: MagneticBut
   const ButtonContent = (
     <motion.div
       ref={ref}
-      className={`relative inline-flex items-center justify-center gap-2 px-8 py-4 font-display font-semibold text-primary-foreground rounded-lg overflow-hidden group ${className}`}
+      className={`relative inline-flex items-center justify-center gap-2 px-8 py-4 font-body font-semibold text-white rounded-lg overflow-hidden group ${className}`}
       style={{
         x: xSpring,
         y: ySpring,
@@ -57,13 +57,13 @@ const MagneticButton = ({ children, className = '', onClick, href }: MagneticBut
       whileTap={{ scale: 0.95 }}
     >
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-90 group-hover:opacity-100 transition-opacity" />
+      <div className="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-100 group-hover:opacity-90 transition-opacity" />
       
       {/* Glow effect */}
       <motion.div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity"
         style={{
-          boxShadow: '0 0 30px hsl(0 85% 45% / 0.5), 0 0 60px hsl(0 85% 45% / 0.3)',
+          boxShadow: '0 0 30px hsl(0 85% 40% / 0.5), 0 0 60px hsl(0 85% 40% / 0.3)',
         }}
       />
 
@@ -74,11 +74,11 @@ const MagneticButton = ({ children, className = '', onClick, href }: MagneticBut
         whileHover={{ x: '100%' }}
         transition={{ duration: 0.5 }}
         style={{
-          background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
+          background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent)',
         }}
       />
 
-      <span className="relative z-10">{children}</span>
+      <span className="relative z-10 text-white font-semibold tracking-wide text-sm uppercase">{children}</span>
     </motion.div>
   );
 
