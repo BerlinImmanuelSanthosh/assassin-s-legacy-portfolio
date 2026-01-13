@@ -29,7 +29,7 @@ const HeroSection = () => {
   };
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 pb-8">
       {/* Background gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background pointer-events-none" />
 
@@ -98,7 +98,7 @@ const HeroSection = () => {
         {/* Summary from resume */}
         <motion.p
           variants={itemVariants}
-          className="text-lg text-muted-foreground max-w-3xl mx-auto mb-10 font-body leading-relaxed"
+          className="text-base text-muted-foreground max-w-2xl mx-auto mb-8 font-body leading-relaxed"
         >
           Pre-final year B.Tech student in AI and Data Science with experience in Python, JavaScript, and R for data analysis. Built AI projects, including a learning organizer chatbot that creates study plans, multilingual answers, and structured notes from one prompt.
         </motion.p>
@@ -106,7 +106,7 @@ const HeroSection = () => {
         {/* CTA Buttons */}
         <motion.div
           variants={itemVariants}
-          className="flex flex-wrap justify-center gap-4 mb-12"
+          className="flex flex-wrap justify-center gap-4 mb-8"
         >
           <MagneticButton onClick={() => scrollToSection('project')}>
             View Project
@@ -123,7 +123,7 @@ const HeroSection = () => {
         {/* Social links */}
         <motion.div
           variants={itemVariants}
-          className="flex justify-center gap-6 mb-24"
+          className="flex justify-center gap-6 mb-16"
         >
           {[
             { icon: Linkedin, href: 'https://www.linkedin.com/in/berlin-imman', label: 'LinkedIn' },
