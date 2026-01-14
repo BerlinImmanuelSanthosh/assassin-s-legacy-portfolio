@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import SectionHeading from '../SectionHeading';
 import SectionBackground from '../SectionBackground';
+import HoverCard from '../HoverCard';
 import { Briefcase, ExternalLink } from 'lucide-react';
 
 const ExperienceSection = () => {
@@ -67,73 +68,73 @@ const ExperienceSection = () => {
                 />
               </motion.div>
 
-              {/* Content - Tech Card Style */}
-              <motion.div
-                className="relative overflow-hidden bg-card/80 backdrop-blur-xl border border-border group"
-                style={{
-                  clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px))',
-                }}
-                whileHover={{ y: -5 }}
-                transition={{ duration: 0.2 }}
-              >
-                {/* Corner accents */}
-                <div className="absolute top-0 right-0 w-6 h-6">
-                  <div className="absolute top-0 right-[16px] w-4 h-[2px] bg-primary opacity-50 group-hover:opacity-100 transition-opacity" />
-                  <div className="absolute top-[16px] right-0 w-[2px] h-4 bg-primary opacity-50 group-hover:opacity-100 transition-opacity" />
-                </div>
-                <div className="absolute bottom-0 left-0 w-6 h-6">
-                  <div className="absolute bottom-0 left-[16px] w-4 h-[2px] bg-primary opacity-50 group-hover:opacity-100 transition-opacity" />
-                  <div className="absolute bottom-[16px] left-0 w-[2px] h-4 bg-primary opacity-50 group-hover:opacity-100 transition-opacity" />
-                </div>
-
-                <div className="relative z-10 p-6">
-                  <div className="flex items-center gap-3 mb-3">
-                    <Briefcase className="w-5 h-5 text-primary" />
-                    <span className="font-mono text-xs text-primary">{exp.date}</span>
+              {/* Content - Tech Card Style with HoverCard */}
+              <HoverCard>
+                <div
+                  className="relative overflow-hidden bg-card/80 backdrop-blur-xl border border-border"
+                  style={{
+                    clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px))',
+                  }}
+                >
+                  {/* Corner accents */}
+                  <div className="absolute top-0 right-0 w-6 h-6">
+                    <div className="absolute top-0 right-[16px] w-4 h-[2px] bg-primary opacity-50" />
+                    <div className="absolute top-[16px] right-0 w-[2px] h-4 bg-primary opacity-50" />
+                  </div>
+                  <div className="absolute bottom-0 left-0 w-6 h-6">
+                    <div className="absolute bottom-0 left-[16px] w-4 h-[2px] bg-primary opacity-50" />
+                    <div className="absolute bottom-[16px] left-0 w-[2px] h-4 bg-primary opacity-50" />
                   </div>
 
-                  <h3 className="font-display font-bold text-xl text-foreground mb-1">
-                    {exp.organization}
-                  </h3>
-                  <p className="text-primary font-body text-sm mb-4">
-                    {exp.title}
-                  </p>
+                  <div className="relative z-10 p-6">
+                    <div className="flex items-center gap-3 mb-3">
+                      <Briefcase className="w-5 h-5 text-primary" />
+                      <span className="font-mono text-xs text-primary">{exp.date}</span>
+                    </div>
 
-                  <ul className="space-y-2 mb-4">
-                    {exp.points.map((point, pointIndex) => (
-                      <motion.li
-                        key={pointIndex}
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: index * 0.1 + pointIndex * 0.1 }}
-                        className="flex items-start gap-2 text-sm text-muted-foreground font-body"
-                      >
-                        <span 
-                          className="w-1.5 h-1.5 bg-primary mt-2 flex-shrink-0"
-                          style={{ clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)' }}
-                        />
-                        {point}
-                      </motion.li>
-                    ))}
-                  </ul>
+                    <h3 className="font-display font-bold text-xl text-foreground mb-1">
+                      {exp.organization}
+                    </h3>
+                    <p className="text-primary font-body text-sm mb-4">
+                      {exp.title}
+                    </p>
 
-                  <motion.a
-                    href={exp.proofLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-primary font-mono text-xs hover:underline"
-                    whileHover={{ x: 3 }}
-                  >
-                    <ExternalLink className="w-3 h-3" />
-                    Proof of Completion
-                  </motion.a>
+                    <ul className="space-y-2 mb-4">
+                      {exp.points.map((point, pointIndex) => (
+                        <motion.li
+                          key={pointIndex}
+                          initial={{ opacity: 0, x: -10 }}
+                          whileInView={{ opacity: 1, x: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ delay: index * 0.1 + pointIndex * 0.1 }}
+                          className="flex items-start gap-2 text-sm text-muted-foreground font-body"
+                        >
+                          <span 
+                            className="w-1.5 h-1.5 bg-primary mt-2 flex-shrink-0"
+                            style={{ clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)' }}
+                          />
+                          {point}
+                        </motion.li>
+                      ))}
+                    </ul>
+
+                    <motion.a
+                      href={exp.proofLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 text-primary font-mono text-xs hover:underline"
+                      whileHover={{ x: 3 }}
+                    >
+                      <ExternalLink className="w-3 h-3" />
+                      Proof of Completion
+                    </motion.a>
+                  </div>
+
+                  {/* Corner dots */}
+                  <div className="absolute top-2 left-2 w-1 h-1 bg-primary/60" />
+                  <div className="absolute bottom-2 right-2 w-1 h-1 bg-primary/60" />
                 </div>
-
-                {/* Corner dots */}
-                <div className="absolute top-2 left-2 w-1 h-1 bg-primary/60" />
-                <div className="absolute bottom-2 right-2 w-1 h-1 bg-primary/60" />
-              </motion.div>
+              </HoverCard>
             </motion.div>
           ))}
         </div>

@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import SectionHeading from '../SectionHeading';
 import SectionBackground from '../SectionBackground';
+import HoverCard from '../HoverCard';
 import MagneticButton from '../MagneticButton';
 import { Mail, MapPin, Linkedin, Send } from 'lucide-react';
 
@@ -41,75 +42,75 @@ const ContactSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              whileHover={{ y: -3 }}
-              className="group"
             >
-              {info.href ? (
-                <a
-                  href={info.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex flex-col items-center p-6 relative overflow-hidden bg-card/80 backdrop-blur-xl border border-border transition-all text-center"
-                  style={{
-                    clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px))',
-                  }}
-                >
-                  {/* Corner accents */}
-                  <div className="absolute top-0 right-0 w-6 h-6">
-                    <div className="absolute top-0 right-[16px] w-4 h-[2px] bg-primary opacity-50 group-hover:opacity-100 transition-opacity" />
-                    <div className="absolute top-[16px] right-0 w-[2px] h-4 bg-primary opacity-50 group-hover:opacity-100 transition-opacity" />
-                  </div>
-                  <div className="absolute bottom-0 left-0 w-6 h-6">
-                    <div className="absolute bottom-0 left-[16px] w-4 h-[2px] bg-primary opacity-50 group-hover:opacity-100 transition-opacity" />
-                    <div className="absolute bottom-[16px] left-0 w-[2px] h-4 bg-primary opacity-50 group-hover:opacity-100 transition-opacity" />
-                  </div>
-
-                  <div 
-                    className="w-12 h-12 bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors mb-3"
-                    style={{ clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)' }}
+              <HoverCard>
+                {info.href ? (
+                  <a
+                    href={info.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center p-6 relative overflow-hidden bg-card/80 backdrop-blur-xl border border-border transition-all text-center group"
+                    style={{
+                      clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px))',
+                    }}
                   >
-                    <info.icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <p className="font-mono text-xs text-muted-foreground mb-1">{info.label}</p>
-                  <p className="font-body text-sm text-foreground group-hover:text-primary transition-colors break-all">
-                    {info.value}
-                  </p>
+                    {/* Corner accents */}
+                    <div className="absolute top-0 right-0 w-6 h-6">
+                      <div className="absolute top-0 right-[16px] w-4 h-[2px] bg-primary opacity-50 group-hover:opacity-100 transition-opacity" />
+                      <div className="absolute top-[16px] right-0 w-[2px] h-4 bg-primary opacity-50 group-hover:opacity-100 transition-opacity" />
+                    </div>
+                    <div className="absolute bottom-0 left-0 w-6 h-6">
+                      <div className="absolute bottom-0 left-[16px] w-4 h-[2px] bg-primary opacity-50 group-hover:opacity-100 transition-opacity" />
+                      <div className="absolute bottom-[16px] left-0 w-[2px] h-4 bg-primary opacity-50 group-hover:opacity-100 transition-opacity" />
+                    </div>
 
-                  {/* Corner dots */}
-                  <div className="absolute top-2 left-2 w-1 h-1 bg-primary/60" />
-                  <div className="absolute bottom-2 right-2 w-1 h-1 bg-primary/60" />
-                </a>
-              ) : (
-                <div 
-                  className="flex flex-col items-center p-6 relative overflow-hidden bg-card/80 backdrop-blur-xl border border-border text-center"
-                  style={{
-                    clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px))',
-                  }}
-                >
-                  {/* Corner accents */}
-                  <div className="absolute top-0 right-0 w-6 h-6">
-                    <div className="absolute top-0 right-[16px] w-4 h-[2px] bg-primary opacity-50" />
-                    <div className="absolute top-[16px] right-0 w-[2px] h-4 bg-primary opacity-50" />
-                  </div>
-                  <div className="absolute bottom-0 left-0 w-6 h-6">
-                    <div className="absolute bottom-0 left-[16px] w-4 h-[2px] bg-primary opacity-50" />
-                    <div className="absolute bottom-[16px] left-0 w-[2px] h-4 bg-primary opacity-50" />
-                  </div>
+                    <div 
+                      className="w-12 h-12 bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors mb-3"
+                      style={{ clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)' }}
+                    >
+                      <info.icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <p className="font-mono text-xs text-muted-foreground mb-1">{info.label}</p>
+                    <p className="font-body text-sm text-foreground group-hover:text-primary transition-colors break-all">
+                      {info.value}
+                    </p>
 
+                    {/* Corner dots */}
+                    <div className="absolute top-2 left-2 w-1 h-1 bg-primary/60" />
+                    <div className="absolute bottom-2 right-2 w-1 h-1 bg-primary/60" />
+                  </a>
+                ) : (
                   <div 
-                    className="w-12 h-12 bg-primary/10 flex items-center justify-center mb-3"
-                    style={{ clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)' }}
+                    className="flex flex-col items-center p-6 relative overflow-hidden bg-card/80 backdrop-blur-xl border border-border text-center"
+                    style={{
+                      clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px))',
+                    }}
                   >
-                    <info.icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <p className="font-mono text-xs text-muted-foreground mb-1">{info.label}</p>
-                  <p className="font-body text-sm text-foreground">{info.value}</p>
+                    {/* Corner accents */}
+                    <div className="absolute top-0 right-0 w-6 h-6">
+                      <div className="absolute top-0 right-[16px] w-4 h-[2px] bg-primary opacity-50" />
+                      <div className="absolute top-[16px] right-0 w-[2px] h-4 bg-primary opacity-50" />
+                    </div>
+                    <div className="absolute bottom-0 left-0 w-6 h-6">
+                      <div className="absolute bottom-0 left-[16px] w-4 h-[2px] bg-primary opacity-50" />
+                      <div className="absolute bottom-[16px] left-0 w-[2px] h-4 bg-primary opacity-50" />
+                    </div>
 
-                  {/* Corner dots */}
-                  <div className="absolute top-2 left-2 w-1 h-1 bg-primary/60" />
-                  <div className="absolute bottom-2 right-2 w-1 h-1 bg-primary/60" />
-                </div>
-              )}
+                    <div 
+                      className="w-12 h-12 bg-primary/10 flex items-center justify-center mb-3"
+                      style={{ clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)' }}
+                    >
+                      <info.icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <p className="font-mono text-xs text-muted-foreground mb-1">{info.label}</p>
+                    <p className="font-body text-sm text-foreground">{info.value}</p>
+
+                    {/* Corner dots */}
+                    <div className="absolute top-2 left-2 w-1 h-1 bg-primary/60" />
+                    <div className="absolute bottom-2 right-2 w-1 h-1 bg-primary/60" />
+                  </div>
+                )}
+              </HoverCard>
             </motion.div>
           ))}
         </div>
