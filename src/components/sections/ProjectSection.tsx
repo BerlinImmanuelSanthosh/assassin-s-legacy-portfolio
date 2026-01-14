@@ -95,7 +95,7 @@ const ProjectSection = () => {
 
                   {/* Link */}
                   <motion.a
-                    href="https://bit.ly/4jp6CoZ"
+                    href="https://github.com/BerlinImmanuelSanthosh/Chatbot-Project-HALO-"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-primary font-display text-sm font-semibold group"

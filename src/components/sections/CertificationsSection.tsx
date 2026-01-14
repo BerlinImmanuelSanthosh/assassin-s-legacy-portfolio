@@ -10,25 +10,25 @@ const CertificationsSection = () => {
       name: 'Deploying SAP on Google Cloud, Gemini for Application Developers, Introduction to Responsible AI',
       org: 'Google Cloud',
       year: '2025',
-      link: 'https://bit.ly/4oPlcIK',
+      link: 'https://github.com/BerlinImmanuelSanthosh/Certificates/blob/main/Google%20Cloud%20Courses.pdf',
     },
     {
       name: 'Database Management System',
       org: 'MongoDB',
       year: '2025',
-      link: 'https://bit.ly/4ku95x8',
+      link: 'https://github.com/BerlinImmanuelSanthosh/Certificates/blob/main/Berlin%20Immanuel%20Santhosh.J%20Mongo%20DB%20Certificates.pdf',
     },
     {
       name: 'Fundamentals Of Machine Learning And AI',
       org: 'AWS',
       year: '2025',
-      link: 'https://bit.ly/4q9hMkn',
+      link: 'https://github.com/BerlinImmanuelSanthosh/Certificates/blob/main/Fundamentals%20Of%20MAchine%20Learning.pdf',
     },
     {
       name: 'Foundations Of Prompt Engineering',
       org: 'AWS',
       year: '2025',
-      link: 'https://bit.ly/49naoL6',
+      link: 'https://github.com/BerlinImmanuelSanthosh/Certificates/blob/main/PromptEngineeringCertificate.PNG',
     },
   ];
 

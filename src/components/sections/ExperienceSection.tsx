@@ -15,7 +15,7 @@ const ExperienceSection = () => {
         'Prepared questions for a meeting with client senior leadership',
         'Created visuals for data analysis to help executives with effective decision making',
       ],
-      proofLink: 'https://bit.ly/4kA9luJ',
+      proofLink: 'https://github.com/BerlinImmanuelSanthosh/Certificates/blob/main/Tata%20internship%20Data%20Visualization.pdf',
     },
     {
       title: 'Machine Learning Virtual Intern',
@@ -26,7 +26,7 @@ const ExperienceSection = () => {
         'Built and evaluated ML workflows while staying consistently engaged throughout the internship period.',
         'Recognized for exceptional performance, curiosity, and active problem-solving during the program.',
       ],
-      proofLink: 'https://bit.ly/4sqeDy9',
+      proofLink: 'https://github.com/BerlinImmanuelSanthosh/Certificates/blob/main/Genzinternship.jpg',
     },
   ];
 
