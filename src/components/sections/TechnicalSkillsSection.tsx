@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import SectionHeading from '../SectionHeading';
+import SectionBackground from '../SectionBackground';
 
 const TechnicalSkillsSection = () => {
   const skills = [
@@ -15,7 +16,7 @@ const TechnicalSkillsSection = () => {
 
   return (
     <section id="technical-skills" className="py-24 px-4 relative">
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/5 to-transparent pointer-events-none" />
+      <SectionBackground variant="default" />
 
       <div className="max-w-4xl mx-auto relative">
         <SectionHeading title="TECHNICAL SKILLS" />
@@ -24,26 +25,62 @@ const TechnicalSkillsSection = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="glass-card p-8 rounded-lg"
+          className="relative"
         >
-          <div className="grid sm:grid-cols-2 gap-4">
-            {skills.map((skill, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.05 }}
-                whileHover={{ x: 5 }}
-                className="flex items-start gap-3 p-3 rounded-lg hover:bg-secondary/30 transition-colors"
-              >
-                <motion.div
-                  className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"
-                  whileHover={{ scale: 1.5 }}
-                />
-                <span className="font-body text-muted-foreground">{skill}</span>
-              </motion.div>
-            ))}
+          {/* Tech card container */}
+          <div 
+            className="relative overflow-hidden bg-card/80 backdrop-blur-xl border border-border"
+            style={{
+              clipPath: 'polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 24px 100%, 0 calc(100% - 24px))',
+            }}
+          >
+            {/* Corner accents */}
+            <div className="absolute top-0 right-0 w-10 h-10">
+              <div className="absolute top-0 right-[24px] w-8 h-[2px] bg-primary" />
+              <div className="absolute top-[24px] right-0 w-[2px] h-8 bg-primary" />
+            </div>
+            <div className="absolute bottom-0 left-0 w-10 h-10">
+              <div className="absolute bottom-0 left-[24px] w-8 h-[2px] bg-primary" />
+              <div className="absolute bottom-[24px] left-0 w-[2px] h-8 bg-primary" />
+            </div>
+
+            <div className="relative z-10 p-8">
+              <div className="grid sm:grid-cols-2 gap-4">
+                {skills.map((skill, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.05 }}
+                    className="flex items-start gap-3 p-3 group relative overflow-hidden"
+                    style={{
+                      clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
+                      background: 'linear-gradient(135deg, hsl(0 85% 45% / 0.03) 0%, transparent 100%)',
+                    }}
+                  >
+                    {/* Hover scan line */}
+                    <motion.div
+                      className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100"
+                      initial={{ top: 0 }}
+                      whileHover={{ top: '100%' }}
+                      transition={{ duration: 0.4 }}
+                    />
+                    
+                    <motion.div
+                      className="w-2 h-2 bg-primary mt-2 flex-shrink-0"
+                      style={{ clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)' }}
+                      whileHover={{ scale: 1.5, rotate: 45 }}
+                    />
+                    <span className="font-body text-muted-foreground group-hover:text-foreground transition-colors">{skill}</span>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+
+            {/* Corner dots */}
+            <div className="absolute top-3 left-3 w-1.5 h-1.5 bg-primary/60" />
+            <div className="absolute bottom-3 right-3 w-1.5 h-1.5 bg-primary/60" />
           </div>
         </motion.div>
       </div>

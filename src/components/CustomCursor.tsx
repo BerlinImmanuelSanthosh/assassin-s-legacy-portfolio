@@ -2,14 +2,13 @@ import { useEffect, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 
 const CustomCursor = () => {
-  const [isHovering, setIsHovering] = useState(false);
   const [isClicking, setIsClicking] = useState(false);
-  const [cursorVariant, setCursorVariant] = useState<'default' | 'button' | 'link' | 'text'>('default');
+  const [isHovering, setIsHovering] = useState(false);
   
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
   
-  const springConfig = { damping: 25, stiffness: 400 };
+  const springConfig = { damping: 20, stiffness: 400 };
   const cursorXSpring = useSpring(cursorX, springConfig);
   const cursorYSpring = useSpring(cursorY, springConfig);
 
@@ -24,17 +23,9 @@ const CustomCursor = () => {
 
     const handleMouseOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
-      if (target.closest('button') || target.closest('[role="button"]')) {
-        setCursorVariant('button');
+      if (target.closest('button') || target.closest('[role="button"]') || target.closest('a')) {
         setIsHovering(true);
-      } else if (target.closest('a')) {
-        setCursorVariant('link');
-        setIsHovering(true);
-      } else if (target.closest('p') || target.closest('h1') || target.closest('h2') || target.closest('h3')) {
-        setCursorVariant('text');
-        setIsHovering(false);
       } else {
-        setCursorVariant('default');
         setIsHovering(false);
       }
     };
@@ -52,18 +43,11 @@ const CustomCursor = () => {
     };
   }, [cursorX, cursorY]);
 
-  const variants = {
-    default: { scale: 1, backgroundColor: 'transparent' },
-    button: { scale: 1.5, backgroundColor: 'hsl(0, 85%, 45%, 0.2)' },
-    link: { scale: 1.3, backgroundColor: 'hsl(0, 85%, 45%, 0.15)' },
-    text: { scale: 0.8, backgroundColor: 'transparent' },
-  };
-
   return (
     <>
-      {/* Main cursor */}
+      {/* Assassin's Creed inspired cursor - Red diamond/cross shape */}
       <motion.div
-        className="fixed top-0 left-0 w-4 h-4 pointer-events-none z-[9999] mix-blend-difference"
+        className="fixed top-0 left-0 pointer-events-none z-[9999]"
         style={{
           x: cursorXSpring,
           y: cursorYSpring,
@@ -71,51 +55,112 @@ const CustomCursor = () => {
           translateY: '-50%',
         }}
       >
+        {/* Main diamond cursor */}
         <motion.div
-          className="w-full h-full rounded-full border-2 border-primary"
+          className="relative"
           animate={{
-            scale: isClicking ? 0.8 : isHovering ? 1.5 : 1,
+            scale: isClicking ? 0.7 : isHovering ? 1.3 : 1,
+            rotate: isHovering ? 45 : 0,
           }}
-          transition={{ duration: 0.15 }}
-        />
+          transition={{ duration: 0.15, ease: 'easeOut' }}
+        >
+          {/* Diamond shape */}
+          <div 
+            className="w-4 h-4 rotate-45 border-2 border-primary bg-primary/20"
+            style={{
+              boxShadow: '0 0 10px hsl(0 85% 45% / 0.8), 0 0 20px hsl(0 85% 45% / 0.4)',
+            }}
+          />
+          
+          {/* Cross lines extending from cursor */}
+          <motion.div
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2"
+            animate={{
+              opacity: isHovering ? 1 : 0.6,
+            }}
+          >
+            <div className="absolute w-6 h-[1px] bg-primary left-1/2 -translate-x-1/2" style={{ boxShadow: '0 0 6px hsl(0 85% 45%)' }} />
+            <div className="absolute h-6 w-[1px] bg-primary top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2" style={{ boxShadow: '0 0 6px hsl(0 85% 45%)' }} />
+          </motion.div>
+        </motion.div>
       </motion.div>
 
-      {/* Cursor glow ring */}
+      {/* Outer tracking ring - tech style */}
       <motion.div
-        className="fixed top-0 left-0 w-10 h-10 pointer-events-none z-[9998]"
+        className="fixed top-0 left-0 pointer-events-none z-[9998]"
         style={{
           x: cursorXSpring,
           y: cursorYSpring,
           translateX: '-50%',
           translateY: '-50%',
         }}
-        animate={cursorVariant}
-        variants={variants}
-        transition={{ duration: 0.2 }}
       >
-        <motion.div
-          className="w-full h-full rounded-full border border-primary/30"
+        <motion.svg
+          width="40"
+          height="40"
+          viewBox="0 0 40 40"
           animate={{
-            scale: isClicking ? 1.5 : 1,
-            opacity: isClicking ? 0 : 0.5,
+            scale: isHovering ? 1.4 : 1,
+            rotate: isHovering ? 90 : 0,
           }}
           transition={{ duration: 0.2 }}
-        />
+        >
+          {/* Corner brackets - tech HUD style */}
+          <motion.path
+            d="M2 12 L2 2 L12 2"
+            fill="none"
+            stroke="hsl(0, 85%, 45%)"
+            strokeWidth="1.5"
+            animate={{ opacity: isHovering ? 1 : 0.5 }}
+          />
+          <motion.path
+            d="M28 2 L38 2 L38 12"
+            fill="none"
+            stroke="hsl(0, 85%, 45%)"
+            strokeWidth="1.5"
+            animate={{ opacity: isHovering ? 1 : 0.5 }}
+          />
+          <motion.path
+            d="M38 28 L38 38 L28 38"
+            fill="none"
+            stroke="hsl(0, 85%, 45%)"
+            strokeWidth="1.5"
+            animate={{ opacity: isHovering ? 1 : 0.5 }}
+          />
+          <motion.path
+            d="M12 38 L2 38 L2 28"
+            fill="none"
+            stroke="hsl(0, 85%, 45%)"
+            strokeWidth="1.5"
+            animate={{ opacity: isHovering ? 1 : 0.5 }}
+          />
+        </motion.svg>
       </motion.div>
 
-      {/* Click ripple effect */}
+      {/* Click burst effect */}
       {isClicking && (
         <motion.div
-          className="fixed top-0 left-0 w-20 h-20 pointer-events-none z-[9997]"
+          className="fixed top-0 left-0 pointer-events-none z-[9997]"
           style={{
-            x: cursorX.get() - 40,
-            y: cursorY.get() - 40,
+            x: cursorX.get() - 30,
+            y: cursorY.get() - 30,
           }}
-          initial={{ scale: 0, opacity: 0.5 }}
-          animate={{ scale: 2, opacity: 0 }}
-          transition={{ duration: 0.5 }}
         >
-          <div className="w-full h-full rounded-full bg-primary/20" />
+          <motion.svg
+            width="60"
+            height="60"
+            viewBox="0 0 60 60"
+            initial={{ scale: 0.5, opacity: 1 }}
+            animate={{ scale: 2, opacity: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <motion.path
+              d="M30 5 L35 25 L55 30 L35 35 L30 55 L25 35 L5 30 L25 25 Z"
+              fill="none"
+              stroke="hsl(0, 85%, 45%)"
+              strokeWidth="1"
+            />
+          </motion.svg>
         </motion.div>
       )}
     </>

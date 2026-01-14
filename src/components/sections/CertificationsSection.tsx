@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import SectionHeading from '../SectionHeading';
+import SectionBackground from '../SectionBackground';
 import { Award, ExternalLink } from 'lucide-react';
 
 const CertificationsSection = () => {
@@ -32,7 +33,9 @@ const CertificationsSection = () => {
 
   return (
     <section id="certifications" className="py-24 px-4 relative">
-      <div className="max-w-4xl mx-auto">
+      <SectionBackground variant="alternate" />
+      
+      <div className="max-w-4xl mx-auto relative">
         <SectionHeading title="CERTIFICATIONS" />
 
         <div className="grid sm:grid-cols-2 gap-4">
@@ -47,26 +50,56 @@ const CertificationsSection = () => {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
               whileHover={{ scale: 1.02, y: -3 }}
-              className="glass-card p-5 rounded-lg group cursor-pointer"
+              className="relative overflow-hidden bg-card/80 backdrop-blur-xl border border-border group"
+              style={{
+                clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px))',
+              }}
             >
-              <div className="flex items-start gap-3">
-                <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors">
-                  <Award className="w-5 h-5 text-primary" />
-                </div>
-                <div className="flex-1">
-                  <p className="font-body text-sm text-foreground mb-2 group-hover:text-primary transition-colors">
-                    {cert.name}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <span className="font-mono text-xs text-primary">{cert.org}</span>
-                    <span className="font-mono text-xs text-muted-foreground">{cert.year}</span>
+              {/* Corner accents */}
+              <div className="absolute top-0 right-0 w-6 h-6">
+                <div className="absolute top-0 right-[16px] w-4 h-[2px] bg-primary opacity-50 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute top-[16px] right-0 w-[2px] h-4 bg-primary opacity-50 group-hover:opacity-100 transition-opacity" />
+              </div>
+              <div className="absolute bottom-0 left-0 w-6 h-6">
+                <div className="absolute bottom-0 left-[16px] w-4 h-[2px] bg-primary opacity-50 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute bottom-[16px] left-0 w-[2px] h-4 bg-primary opacity-50 group-hover:opacity-100 transition-opacity" />
+              </div>
+
+              {/* Scan line on hover */}
+              <motion.div
+                className="absolute inset-x-0 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent opacity-0 group-hover:opacity-100"
+                initial={{ top: 0 }}
+                whileHover={{ top: '100%' }}
+                transition={{ duration: 0.6 }}
+              />
+
+              <div className="relative z-10 p-5">
+                <div className="flex items-start gap-3">
+                  <div 
+                    className="w-10 h-10 bg-primary/10 flex items-center justify-center flex-shrink-0 group-hover:bg-primary/20 transition-colors"
+                    style={{ clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)' }}
+                  >
+                    <Award className="w-5 h-5 text-primary" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-body text-sm text-foreground mb-2 group-hover:text-primary transition-colors">
+                      {cert.name}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="font-mono text-xs text-primary">{cert.org}</span>
+                      <span className="font-mono text-xs text-muted-foreground">{cert.year}</span>
+                    </div>
                   </div>
                 </div>
+                <div className="flex items-center gap-1 mt-3 text-muted-foreground group-hover:text-primary transition-colors">
+                  <ExternalLink className="w-3 h-3" />
+                  <span className="font-mono text-xs">View Certificate</span>
+                </div>
               </div>
-              <div className="flex items-center gap-1 mt-3 text-muted-foreground group-hover:text-primary transition-colors">
-                <ExternalLink className="w-3 h-3" />
-                <span className="font-mono text-xs">View Certificate</span>
-              </div>
+
+              {/* Corner dots */}
+              <div className="absolute top-2 left-2 w-1 h-1 bg-primary/60" />
+              <div className="absolute bottom-2 right-2 w-1 h-1 bg-primary/60" />
             </motion.a>
           ))}
         </div>
