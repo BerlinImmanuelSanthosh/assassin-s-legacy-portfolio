@@ -1,62 +1,62 @@
 import { motion } from 'framer-motion';
-import { useMemo } from 'react';
+import { useMemo, memo } from 'react';
 
 interface SectionBackgroundProps {
   variant?: 'default' | 'alternate';
 }
 
-const SectionBackground = ({ variant = 'default' }: SectionBackgroundProps) => {
+const SectionBackground = memo(({ variant = 'default' }: SectionBackgroundProps) => {
   const particles = useMemo(() => 
-    [...Array(20)].map(() => ({
+    [...Array(12)].map(() => ({
       left: Math.random() * 100,
       top: Math.random() * 100,
-      size: 2 + Math.random() * 4,
+      size: 2 + Math.random() * 3,
       delay: Math.random() * 3,
-      duration: 3 + Math.random() * 4,
+      duration: 4 + Math.random() * 3,
     })), []
   );
 
   const floatingLines = useMemo(() =>
-    [...Array(8)].map((_, i) => ({
-      left: 10 + i * 12,
-      delay: i * 0.3,
-      height: 40 + Math.random() * 60,
+    [...Array(5)].map((_, i) => ({
+      left: 15 + i * 18,
+      delay: i * 0.4,
+      height: 30 + Math.random() * 40,
     })), []
   );
 
   return (
-    <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {/* Animated gradient background */}
-      <motion.div
+    <div className="absolute inset-0 overflow-hidden pointer-events-none" style={{ willChange: 'transform' }}>
+      {/* Gradient background */}
+      <div
         className="absolute inset-0"
         style={{
           background: variant === 'default' 
-            ? 'linear-gradient(180deg, transparent 0%, hsl(0 85% 45% / 0.03) 50%, transparent 100%)'
-            : 'linear-gradient(180deg, hsl(0 85% 45% / 0.02) 0%, hsl(0 85% 45% / 0.05) 50%, hsl(0 85% 45% / 0.02) 100%)',
+            ? 'linear-gradient(180deg, transparent 0%, hsl(0 85% 45% / 0.02) 50%, transparent 100%)'
+            : 'linear-gradient(180deg, hsl(0 85% 45% / 0.015) 0%, hsl(0 85% 45% / 0.04) 50%, hsl(0 85% 45% / 0.015) 100%)',
         }}
       />
 
-      {/* Animated diagonal lines */}
-      <svg className="absolute inset-0 w-full h-full opacity-[0.15]">
-        {[...Array(6)].map((_, i) => (
+      {/* Diagonal lines - reduced */}
+      <svg className="absolute inset-0 w-full h-full opacity-[0.12]">
+        {[...Array(4)].map((_, i) => (
           <motion.line
             key={`diag-${i}`}
-            x1={`${-10 + i * 25}%`}
+            x1={`${-5 + i * 30}%`}
             y1="0%"
-            x2={`${10 + i * 25}%`}
+            x2={`${15 + i * 30}%`}
             y2="100%"
             stroke="hsl(0, 85%, 45%)"
             strokeWidth="1"
-            strokeDasharray="8 12"
+            strokeDasharray="8 16"
             initial={{ pathLength: 0, opacity: 0 }}
-            whileInView={{ pathLength: 1, opacity: 0.5 }}
+            whileInView={{ pathLength: 1, opacity: 0.4 }}
             viewport={{ once: true }}
-            transition={{ duration: 1.5, delay: i * 0.1 }}
+            transition={{ duration: 1, delay: i * 0.15 }}
           />
         ))}
       </svg>
 
-      {/* Floating data particles */}
+      {/* Floating particles */}
       {particles.map((particle, i) => (
         <motion.div
           key={`particle-${i}`}
@@ -67,11 +67,11 @@ const SectionBackground = ({ variant = 'default' }: SectionBackgroundProps) => {
             width: particle.size,
             height: particle.size,
             clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+            willChange: 'transform, opacity',
           }}
           animate={{
-            y: [-20, 20, -20],
-            opacity: [0.2, 0.6, 0.2],
-            rotate: [0, 180, 360],
+            y: [-15, 15, -15],
+            opacity: [0.2, 0.5, 0.2],
           }}
           transition={{
             duration: particle.duration,
@@ -82,28 +82,31 @@ const SectionBackground = ({ variant = 'default' }: SectionBackgroundProps) => {
         />
       ))}
 
-      {/* Vertical pulse lines */}
+      {/* Vertical pulse lines with dots */}
       {floatingLines.map((line, i) => (
         <motion.div
           key={`vline-${i}`}
-          className="absolute w-[1px] bg-gradient-to-b from-transparent via-primary/40 to-transparent"
+          className="absolute w-[1px] bg-gradient-to-b from-transparent via-primary/30 to-transparent"
           style={{
             left: `${line.left}%`,
             height: `${line.height}%`,
-            top: '20%',
+            top: '25%',
+            willChange: 'transform, opacity',
           }}
           initial={{ opacity: 0, scaleY: 0 }}
           whileInView={{ opacity: 1, scaleY: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: line.delay }}
+          transition={{ duration: 0.6, delay: line.delay }}
         >
-          {/* Traveling dot */}
           <motion.div
-            className="absolute w-2 h-2 -left-[3px] bg-primary rounded-full"
-            style={{ boxShadow: '0 0 8px hsl(0 85% 45%)' }}
+            className="absolute w-2 h-2 -left-[3px] bg-primary"
+            style={{ 
+              clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+              boxShadow: '0 0 6px hsl(0 85% 45%)',
+            }}
             animate={{ top: ['0%', '100%', '0%'] }}
             transition={{
-              duration: 4 + i * 0.5,
+              duration: 5 + i,
               repeat: Infinity,
               ease: 'linear',
               delay: line.delay,
@@ -112,77 +115,64 @@ const SectionBackground = ({ variant = 'default' }: SectionBackgroundProps) => {
         </motion.div>
       ))}
 
-      {/* Hexagonal grid pattern */}
-      <svg className="absolute inset-0 w-full h-full opacity-[0.06]">
-        <defs>
-          <pattern id="section-hex" width="50" height="43.3" patternUnits="userSpaceOnUse">
-            <polygon 
-              points="25,0 50,14.4 50,43.3 25,57.7 0,43.3 0,14.4" 
-              fill="none" 
-              stroke="hsl(0, 85%, 45%)"
-              strokeWidth="0.5"
-              transform="translate(0, -7.2)"
-            />
-          </pattern>
-        </defs>
-        <rect width="100%" height="100%" fill="url(#section-hex)" />
-      </svg>
-
-      {/* Corner tech accents */}
+      {/* Corner accents */}
       <div className="absolute top-4 left-4">
         <motion.div
-          className="w-12 h-[2px] bg-primary/50"
+          className="w-10 h-[2px] bg-primary/40"
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.4 }}
         />
         <motion.div
-          className="w-[2px] h-12 bg-primary/50"
+          className="w-[2px] h-10 bg-primary/40"
           initial={{ scaleY: 0 }}
           whileInView={{ scaleY: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
         />
       </div>
 
       <div className="absolute top-4 right-4">
         <motion.div
-          className="w-12 h-[2px] bg-primary/50 ml-auto"
+          className="w-10 h-[2px] bg-primary/40 ml-auto"
           initial={{ scaleX: 0 }}
           whileInView={{ scaleX: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.4 }}
         />
         <motion.div
-          className="w-[2px] h-12 bg-primary/50 ml-auto"
+          className="w-[2px] h-10 bg-primary/40 ml-auto"
           initial={{ scaleY: 0 }}
           whileInView={{ scaleY: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
         />
       </div>
 
-      {/* Animated scan effect */}
+      {/* Scan effect */}
       <motion.div
-        className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-primary/60 to-transparent"
+        className="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent"
         animate={{ top: ['0%', '100%'] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'linear' }}
+        transition={{ duration: 10, repeat: Infinity, ease: 'linear' }}
+        style={{ willChange: 'transform' }}
       />
 
-      {/* Data flow lines on edges */}
+      {/* Edge data flows */}
       <motion.div
-        className="absolute left-0 top-1/4 w-[3px] h-1/2 bg-gradient-to-b from-transparent via-primary/30 to-transparent"
-        animate={{ opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 2, repeat: Infinity }}
+        className="absolute left-0 top-1/3 w-[2px] h-1/3 bg-gradient-to-b from-transparent via-primary/25 to-transparent"
+        animate={{ opacity: [0.2, 0.5, 0.2] }}
+        transition={{ duration: 3, repeat: Infinity }}
       />
       <motion.div
-        className="absolute right-0 top-1/4 w-[3px] h-1/2 bg-gradient-to-b from-transparent via-primary/30 to-transparent"
-        animate={{ opacity: [0.3, 0.6, 0.3] }}
-        transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+        className="absolute right-0 top-1/3 w-[2px] h-1/3 bg-gradient-to-b from-transparent via-primary/25 to-transparent"
+        animate={{ opacity: [0.2, 0.5, 0.2] }}
+        transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}
       />
     </div>
   );
-};
+});
+
+SectionBackground.displayName = 'SectionBackground';
 
 export default SectionBackground;
