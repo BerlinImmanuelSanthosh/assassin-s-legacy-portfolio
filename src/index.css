@@ -26,8 +26,8 @@
     --secondary-foreground: 0 0% 15%;
 
     /* Muted Light Grey */
-    --muted: 0 0% 94%;
-    --muted-foreground: 0 0% 40%;
+    --muted: 0 0% 0%;
+    --muted-foreground: 0 0% 0%;
 
     /* Accent Red */
     --accent: 0 80% 45%;
