@@ -1,14 +1,13 @@
 import { motion } from 'framer-motion';
 import { ReactNode, useState } from 'react';
 
-interface AnimatedCardProps {
+interface TechCardProps {
   children: ReactNode;
   className?: string;
   delay?: number;
-  glowOnHover?: boolean;
 }
 
-const AnimatedCard = ({ children, className = '', delay = 0 }: AnimatedCardProps) => {
+const TechCard = ({ children, className = '', delay = 0 }: TechCardProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -107,4 +106,4 @@ const AnimatedCard = ({ children, className = '', delay = 0 }: AnimatedCardProps
   );
 };
 
-export default AnimatedCard;
+export default TechCard;
