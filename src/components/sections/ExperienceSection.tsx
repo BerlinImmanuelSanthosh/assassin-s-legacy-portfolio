@@ -87,18 +87,18 @@ const ExperienceSection = () => {
                   <div className="relative z-10 p-6">
                     <div className="flex items-center gap-3 mb-3">
                       <Briefcase className="w-5 h-5 text-primary" />
-                      <span className="font-mono text-xs text-primary">{exp.date}</span>
+                      <span className="font-mono text-xs text-primary">{exp.period}</span>
                     </div>
 
                     <h3 className="font-display font-bold text-xl text-foreground mb-1">
-                      {exp.organization}
+                      {exp.company}
                     </h3>
                     <p className="text-primary font-body text-sm mb-4">
                       {exp.title}
                     </p>
 
                     <ul className="space-y-2 mb-4">
-                      {exp.points.map((point, pointIndex) => (
+                      {exp.description.map((point, pointIndex) => (
                         <motion.li
                           key={pointIndex}
                           initial={{ opacity: 0, x: -10 }}

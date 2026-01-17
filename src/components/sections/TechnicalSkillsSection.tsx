@@ -42,29 +42,37 @@ const TechnicalSkillsSection = () => {
               </div>
 
               <div className="relative z-10 p-8">
-                <div className="grid sm:grid-cols-2 gap-4">
-                  {skills.map((skill, index) => (
+                <div className="grid sm:grid-cols-2 gap-6">
+                  {skills.map((skillGroup, groupIndex) => (
                     <motion.div
-                      key={index}
-                      initial={{ opacity: 0, x: -20 }}
-                      whileInView={{ opacity: 1, x: 0 }}
+                      key={groupIndex}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
-                      transition={{ delay: index * 0.05 }}
-                      whileHover={{ 
-                        x: 5,
-                        backgroundColor: 'hsl(0 85% 45% / 0.05)',
-                      }}
-                      className="flex items-start gap-3 p-3 group relative overflow-hidden transition-colors"
-                      style={{
-                        clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
-                      }}
+                      transition={{ delay: groupIndex * 0.1 }}
+                      className="space-y-3"
                     >
-                      <motion.div
-                        className="w-2 h-2 bg-primary mt-2 flex-shrink-0"
-                        style={{ clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)' }}
-                        whileHover={{ scale: 1.5, rotate: 45 }}
-                      />
-                      <span className="font-body text-muted-foreground group-hover:text-foreground transition-colors">{skill}</span>
+                      <h4 className="font-display font-semibold text-primary text-sm uppercase tracking-wider">
+                        {skillGroup.category}
+                      </h4>
+                      <div className="flex flex-wrap gap-2">
+                        {skillGroup.items.map((item, itemIndex) => (
+                          <motion.span
+                            key={itemIndex}
+                            className="px-3 py-1 text-sm font-body text-muted-foreground bg-primary/5 border border-primary/20"
+                            style={{
+                              clipPath: 'polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px))',
+                            }}
+                            whileHover={{ 
+                              backgroundColor: 'hsl(0 85% 45% / 0.15)',
+                              color: 'hsl(0 85% 45%)',
+                              scale: 1.05,
+                            }}
+                          >
+                            {item}
+                          </motion.span>
+                        ))}
+                      </div>
                     </motion.div>
                   ))}
                 </div>
