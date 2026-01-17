@@ -1,353 +1,312 @@
 import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
-import { useEffect, useMemo, memo } from 'react';
+import { useEffect, useMemo, memo, useCallback } from 'react';
 
 const ParallaxBackground = memo(() => {
   const { scrollY } = useScroll();
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 
-  // Smooth spring for mouse
-  const smoothMouseX = useSpring(mouseX, { damping: 50, stiffness: 30 });
-  const smoothMouseY = useSpring(mouseY, { damping: 50, stiffness: 30 });
+  // Optimized spring config for smooth performance
+  const springConfig = { damping: 30, stiffness: 20, mass: 1 };
+  const smoothMouseX = useSpring(mouseX, springConfig);
+  const smoothMouseY = useSpring(mouseY, springConfig);
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      mouseX.set((e.clientX / window.innerWidth - 0.5) * 100);
-      mouseY.set((e.clientY / window.innerHeight - 0.5) * 100);
-    };
-    window.addEventListener('mousemove', handleMouseMove, { passive: true });
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+  const handleMouseMove = useCallback((e: MouseEvent) => {
+    requestAnimationFrame(() => {
+      mouseX.set((e.clientX / window.innerWidth - 0.5) * 60);
+      mouseY.set((e.clientY / window.innerHeight - 0.5) * 60);
+    });
   }, [mouseX, mouseY]);
 
-  // Parallax transforms for different layers
-  const layer1Y = useTransform(scrollY, [0, 5000], [0, -800]);
-  const layer2Y = useTransform(scrollY, [0, 5000], [0, -500]);
-  const layer3Y = useTransform(scrollY, [0, 5000], [0, -300]);
-  const scanLineY = useTransform(scrollY, [0, 5000], [0, -200]);
+  useEffect(() => {
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [handleMouseMove]);
 
-  // Memoized particles
-  const floatingParticles = useMemo(() => 
-    [...Array(25)].map(() => ({
-      left: Math.random() * 100,
-      top: Math.random() * 300,
-      size: 3 + Math.random() * 4,
-      delay: Math.random() * 5,
-      duration: 4 + Math.random() * 4,
-    })), []
-  );
+  // Parallax transforms - smoother with CSS transforms
+  const layer1Y = useTransform(scrollY, [0, 3000], [0, -400]);
+  const layer2Y = useTransform(scrollY, [0, 3000], [0, -250]);
+  const layer3Y = useTransform(scrollY, [0, 3000], [0, -150]);
+
+  // Memoized elements for performance
+  const glowOrbs = useMemo(() => [
+    { size: 700, x: '-5%', y: '0%', opacity: 0.25, delay: 0 },
+    { size: 500, x: '70%', y: '30%', opacity: 0.2, delay: 2 },
+    { size: 600, x: '20%', y: '80%', opacity: 0.22, delay: 4 },
+    { size: 450, x: '60%', y: '150%', opacity: 0.18, delay: 1 },
+    { size: 550, x: '10%', y: '200%', opacity: 0.2, delay: 3 },
+  ], []);
 
   const dataStreams = useMemo(() => 
-    [...Array(8)].map((_, i) => ({
-      left: 10 + i * 12,
-      delay: i * 0.3,
-      height: 200 + Math.random() * 300,
+    [...Array(10)].map((_, i) => ({
+      left: 8 + i * 10,
+      delay: i * 0.2,
+      height: 150 + Math.random() * 200,
+      top: 5 + (i % 3) * 100,
     })), []
   );
 
-  const diagonalLines = useMemo(() => 
-    [...Array(6)].map((_, i) => ({
-      offset: i * 18,
-      delay: i * 0.2,
+  const floatingDiamonds = useMemo(() => 
+    [...Array(20)].map(() => ({
+      left: Math.random() * 100,
+      top: Math.random() * 250,
+      size: 4 + Math.random() * 6,
+      delay: Math.random() * 3,
+      duration: 3 + Math.random() * 2,
     })), []
   );
 
   return (
     <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-      {/* Base gradient */}
+      {/* Base */}
       <div className="absolute inset-0 bg-background" />
       
-      {/* Large animated gradient mesh - Layer 1 (slowest parallax) */}
+      {/* LAYER 1: Large glowing orbs with parallax */}
       <motion.div 
-        className="absolute inset-0"
+        className="absolute w-full h-[350%]"
         style={{ y: layer1Y, willChange: 'transform' }}
       >
-        <motion.div
-          className="absolute w-[800px] h-[800px] rounded-full"
-          style={{
-            background: 'radial-gradient(circle, hsl(0 85% 45% / 0.12) 0%, transparent 60%)',
-            left: '-10%',
-            top: '5%',
-            filter: 'blur(80px)',
-            x: smoothMouseX,
-            y: smoothMouseY,
-          }}
-          animate={{
-            scale: [1, 1.2, 1],
-          }}
-          transition={{ duration: 15, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute w-[600px] h-[600px] rounded-full"
-          style={{
-            background: 'radial-gradient(circle, hsl(0 70% 40% / 0.1) 0%, transparent 60%)',
-            right: '-5%',
-            top: '40%',
-            filter: 'blur(70px)',
-            x: useTransform(smoothMouseX, v => -v * 0.5),
-            y: useTransform(smoothMouseY, v => -v * 0.5),
-          }}
-          animate={{
-            scale: [1.1, 0.9, 1.1],
-          }}
-          transition={{ duration: 12, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute w-[700px] h-[700px] rounded-full"
-          style={{
-            background: 'radial-gradient(circle, hsl(0 90% 50% / 0.08) 0%, transparent 60%)',
-            left: '30%',
-            top: '120%',
-            filter: 'blur(90px)',
-          }}
-          animate={{
-            x: [-50, 50, -50],
-            scale: [1, 1.15, 1],
-          }}
-          transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
-        />
-        <motion.div
-          className="absolute w-[500px] h-[500px] rounded-full"
-          style={{
-            background: 'radial-gradient(circle, hsl(0 80% 45% / 0.1) 0%, transparent 60%)',
-            right: '20%',
-            top: '200%',
-            filter: 'blur(60px)',
-          }}
-          animate={{
-            y: [-30, 30, -30],
-          }}
-          transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
-        />
+        {glowOrbs.map((orb, i) => (
+          <motion.div
+            key={`orb-${i}`}
+            className="absolute rounded-full"
+            style={{
+              width: orb.size,
+              height: orb.size,
+              left: orb.x,
+              top: orb.y,
+              background: `radial-gradient(circle, hsl(0 85% 50% / ${orb.opacity}) 0%, hsl(0 85% 45% / ${orb.opacity * 0.5}) 40%, transparent 70%)`,
+              filter: 'blur(40px)',
+              x: i % 2 === 0 ? smoothMouseX : useTransform(smoothMouseX, v => -v * 0.5),
+              y: i % 2 === 0 ? smoothMouseY : useTransform(smoothMouseY, v => -v * 0.5),
+            }}
+            animate={{
+              scale: [1, 1.15, 1],
+              opacity: [0.8, 1, 0.8],
+            }}
+            transition={{
+              duration: 8 + i * 2,
+              repeat: Infinity,
+              ease: 'easeInOut',
+              delay: orb.delay,
+            }}
+          />
+        ))}
       </motion.div>
 
-      {/* Data streams - Layer 2 (medium parallax) */}
+      {/* LAYER 2: Data streams with traveling particles */}
       <motion.div 
-        className="absolute inset-0"
+        className="absolute w-full h-[350%]"
         style={{ y: layer2Y, willChange: 'transform' }}
       >
         {dataStreams.map((stream, i) => (
-          <motion.div
+          <div
             key={`stream-${i}`}
-            className="absolute w-[2px]"
+            className="absolute"
             style={{
               left: `${stream.left}%`,
+              top: `${stream.top}%`,
+              width: 2,
               height: stream.height,
-              top: `${10 + i * 35}%`,
-              background: 'linear-gradient(180deg, transparent 0%, hsl(0 85% 45% / 0.4) 20%, hsl(0 85% 45% / 0.6) 50%, hsl(0 85% 45% / 0.4) 80%, transparent 100%)',
-            }}
-            initial={{ opacity: 0, scaleY: 0 }}
-            animate={{ 
-              opacity: [0.3, 0.7, 0.3],
-              scaleY: [0.5, 1, 0.5],
-            }}
-            transition={{
-              duration: 4 + i,
-              repeat: Infinity,
-              delay: stream.delay,
-              ease: 'easeInOut',
             }}
           >
-            {/* Traveling dot on stream */}
+            {/* Static glow line */}
             <motion.div
-              className="absolute w-3 h-3 -left-[5px] bg-primary"
+              className="absolute inset-0"
+              style={{
+                background: 'linear-gradient(180deg, transparent 0%, hsl(0 85% 50% / 0.5) 20%, hsl(0 85% 50% / 0.7) 50%, hsl(0 85% 50% / 0.5) 80%, transparent 100%)',
+                boxShadow: '0 0 10px hsl(0 85% 50% / 0.4)',
+              }}
+              animate={{
+                opacity: [0.4, 0.8, 0.4],
+                scaleY: [0.7, 1, 0.7],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                delay: stream.delay,
+                ease: 'easeInOut',
+              }}
+            />
+            {/* Traveling diamond */}
+            <motion.div
+              className="absolute w-4 h-4 -left-[7px] bg-primary"
               style={{
                 clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
-                boxShadow: '0 0 15px hsl(0 85% 45%), 0 0 30px hsl(0 85% 45% / 0.5)',
+                boxShadow: '0 0 20px hsl(0 85% 50%), 0 0 40px hsl(0 85% 50% / 0.6)',
               }}
-              animate={{ top: ['0%', '100%'] }}
+              animate={{ top: ['-10%', '110%'] }}
               transition={{
-                duration: 3 + i * 0.5,
+                duration: 2.5 + i * 0.3,
                 repeat: Infinity,
                 ease: 'linear',
                 delay: stream.delay,
               }}
             />
-          </motion.div>
+          </div>
         ))}
       </motion.div>
 
-      {/* Diagonal scan lines - Layer 3 (faster parallax) */}
+      {/* LAYER 3: Floating diamonds */}
       <motion.div 
-        className="absolute inset-0"
+        className="absolute w-full h-[350%]"
         style={{ y: layer3Y, willChange: 'transform' }}
       >
-        <svg className="absolute inset-0 w-full h-[400%] opacity-30">
-          {diagonalLines.map((line, i) => (
-            <motion.line
-              key={`diag-${i}`}
-              x1={`${line.offset}%`}
-              y1="0%"
-              x2={`${line.offset + 30}%`}
-              y2="100%"
-              stroke="hsl(0, 85%, 45%)"
-              strokeWidth="1.5"
-              strokeDasharray="15 25"
-              initial={{ pathLength: 0, opacity: 0 }}
-              animate={{ 
-                pathLength: [0, 1, 0],
-                opacity: [0, 0.6, 0],
-              }}
-              transition={{ 
-                duration: 8,
-                repeat: Infinity,
-                delay: line.delay + i * 0.5,
-                ease: 'easeInOut',
-              }}
-            />
-          ))}
-        </svg>
-      </motion.div>
-
-      {/* Floating particles throughout the page */}
-      <motion.div 
-        className="absolute inset-0"
-        style={{ y: scanLineY, willChange: 'transform' }}
-      >
-        {floatingParticles.map((particle, i) => (
+        {floatingDiamonds.map((diamond, i) => (
           <motion.div
-            key={`particle-${i}`}
+            key={`diamond-${i}`}
             className="absolute bg-primary"
             style={{
-              left: `${particle.left}%`,
-              top: `${particle.top}%`,
-              width: particle.size,
-              height: particle.size,
+              left: `${diamond.left}%`,
+              top: `${diamond.top}%`,
+              width: diamond.size,
+              height: diamond.size,
               clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
-              boxShadow: '0 0 8px hsl(0 85% 45% / 0.6)',
+              boxShadow: '0 0 12px hsl(0 85% 50% / 0.8)',
             }}
             animate={{
-              y: [-20, 20, -20],
-              x: [-10, 10, -10],
-              opacity: [0.3, 0.8, 0.3],
+              y: [-15, 15, -15],
+              opacity: [0.5, 1, 0.5],
               rotate: [0, 180, 360],
+              scale: [1, 1.2, 1],
             }}
             transition={{
-              duration: particle.duration,
+              duration: diamond.duration,
               repeat: Infinity,
-              delay: particle.delay,
+              delay: diamond.delay,
               ease: 'easeInOut',
             }}
           />
         ))}
       </motion.div>
 
-      {/* Horizontal scan lines */}
+      {/* Horizontal scan lines - very visible */}
       <motion.div
-        className="absolute inset-x-0 h-[3px]"
+        className="fixed inset-x-0 h-[4px]"
         style={{
-          background: 'linear-gradient(90deg, transparent 0%, hsl(0 85% 45% / 0.6) 20%, hsl(0 85% 45% / 0.8) 50%, hsl(0 85% 45% / 0.6) 80%, transparent 100%)',
-          boxShadow: '0 0 20px hsl(0 85% 45% / 0.5)',
+          background: 'linear-gradient(90deg, transparent 0%, hsl(0 85% 50% / 0.7) 15%, hsl(0 85% 50%) 50%, hsl(0 85% 50% / 0.7) 85%, transparent 100%)',
+          boxShadow: '0 0 30px hsl(0 85% 50% / 0.6), 0 0 60px hsl(0 85% 50% / 0.3)',
         }}
-        animate={{ top: ['-5%', '105%'] }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'linear' }}
+        animate={{ top: ['-2%', '102%'] }}
+        transition={{ duration: 5, repeat: Infinity, ease: 'linear' }}
       />
       <motion.div
-        className="absolute inset-x-0 h-[2px]"
+        className="fixed inset-x-0 h-[3px]"
         style={{
-          background: 'linear-gradient(90deg, transparent 0%, hsl(0 85% 45% / 0.4) 30%, hsl(0 85% 45% / 0.5) 50%, hsl(0 85% 45% / 0.4) 70%, transparent 100%)',
+          background: 'linear-gradient(90deg, transparent 0%, hsl(0 85% 50% / 0.5) 20%, hsl(0 85% 50% / 0.8) 50%, hsl(0 85% 50% / 0.5) 80%, transparent 100%)',
+          boxShadow: '0 0 20px hsl(0 85% 50% / 0.4)',
         }}
-        animate={{ top: ['105%', '-5%'] }}
-        transition={{ duration: 9, repeat: Infinity, ease: 'linear', delay: 3 }}
+        animate={{ top: ['102%', '-2%'] }}
+        transition={{ duration: 7, repeat: Infinity, ease: 'linear', delay: 2.5 }}
       />
 
-      {/* Circuit board pattern */}
-      <div className="absolute inset-0 opacity-[0.04]">
-        <svg className="w-full h-[400%]">
+      {/* Circuit pattern - more visible */}
+      <div className="absolute inset-0 h-[350%] opacity-[0.08]">
+        <svg className="w-full h-full">
           <defs>
-            <pattern id="circuit" width="100" height="100" patternUnits="userSpaceOnUse">
+            <pattern id="circuit" width="80" height="80" patternUnits="userSpaceOnUse">
               <path 
-                d="M 10 50 L 40 50 L 50 40 L 60 50 L 90 50 M 50 10 L 50 40 M 50 60 L 50 90" 
-                stroke="hsl(0, 85%, 45%)" 
-                strokeWidth="1" 
+                d="M 10 40 L 30 40 L 40 30 L 50 40 L 70 40 M 40 10 L 40 30 M 40 50 L 40 70" 
+                stroke="hsl(0, 85%, 50%)" 
+                strokeWidth="1.5" 
                 fill="none"
               />
-              <circle cx="10" cy="50" r="3" fill="hsl(0, 85%, 45%)" />
-              <circle cx="90" cy="50" r="3" fill="hsl(0, 85%, 45%)" />
-              <circle cx="50" cy="10" r="3" fill="hsl(0, 85%, 45%)" />
-              <circle cx="50" cy="90" r="3" fill="hsl(0, 85%, 45%)" />
+              <circle cx="10" cy="40" r="3" fill="hsl(0, 85%, 50%)" />
+              <circle cx="70" cy="40" r="3" fill="hsl(0, 85%, 50%)" />
+              <circle cx="40" cy="10" r="3" fill="hsl(0, 85%, 50%)" />
+              <circle cx="40" cy="70" r="3" fill="hsl(0, 85%, 50%)" />
+              <circle cx="40" cy="40" r="2" fill="hsl(0, 85%, 50%)" />
             </pattern>
           </defs>
           <rect width="100%" height="100%" fill="url(#circuit)" />
         </svg>
       </div>
 
-      {/* Hexagonal grid overlay */}
-      <svg className="absolute inset-0 w-full h-[400%] opacity-[0.025]">
+      {/* Hexagonal grid - more visible */}
+      <svg className="absolute inset-0 w-full h-[350%] opacity-[0.05]">
         <defs>
-          <pattern id="hexGrid" width="60" height="52" patternUnits="userSpaceOnUse" patternTransform="scale(2)">
+          <pattern id="hexGrid" width="50" height="43" patternUnits="userSpaceOnUse" patternTransform="scale(1.8)">
             <polygon 
-              points="30,0 60,17.3 60,46.5 30,63.8 0,46.5 0,17.3" 
+              points="25,0 50,14.4 50,38.7 25,53.1 0,38.7 0,14.4" 
               fill="none" 
-              stroke="hsl(0, 85%, 45%)"
-              strokeWidth="0.8"
+              stroke="hsl(0, 85%, 50%)"
+              strokeWidth="1"
             />
           </pattern>
         </defs>
         <rect width="100%" height="100%" fill="url(#hexGrid)" />
       </svg>
 
-      {/* Glowing corner brackets - fixed to viewport */}
-      <div className="fixed top-6 left-6 z-10">
+      {/* Corner HUD brackets - pulsing */}
+      <div className="fixed top-4 left-4 z-10">
         <motion.div 
-          className="w-20 h-[3px] bg-gradient-to-r from-primary to-transparent"
-          animate={{ opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity }}
+          className="w-16 h-[3px] bg-primary"
+          style={{ boxShadow: '0 0 10px hsl(0 85% 50%)' }}
+          animate={{ opacity: [0.6, 1, 0.6] }}
+          transition={{ duration: 1.5, repeat: Infinity }}
         />
         <motion.div 
-          className="w-[3px] h-20 bg-gradient-to-b from-primary to-transparent"
-          animate={{ opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        />
-      </div>
-      <div className="fixed top-6 right-6 z-10 flex flex-col items-end">
-        <motion.div 
-          className="w-20 h-[3px] bg-gradient-to-l from-primary to-transparent"
-          animate={{ opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
-        />
-        <motion.div 
-          className="w-[3px] h-20 bg-gradient-to-b from-primary to-transparent ml-auto"
-          animate={{ opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity, delay: 0.5 }}
+          className="w-[3px] h-16 bg-primary"
+          style={{ boxShadow: '0 0 10px hsl(0 85% 50%)' }}
+          animate={{ opacity: [0.6, 1, 0.6] }}
+          transition={{ duration: 1.5, repeat: Infinity }}
         />
       </div>
-      <div className="fixed bottom-6 left-6 z-10">
+      <div className="fixed top-4 right-4 z-10 flex flex-col items-end">
         <motion.div 
-          className="w-[3px] h-20 bg-gradient-to-t from-primary to-transparent"
-          animate={{ opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+          className="w-16 h-[3px] bg-primary"
+          style={{ boxShadow: '0 0 10px hsl(0 85% 50%)' }}
+          animate={{ opacity: [0.6, 1, 0.6] }}
+          transition={{ duration: 1.5, repeat: Infinity, delay: 0.4 }}
         />
         <motion.div 
-          className="w-20 h-[3px] bg-gradient-to-r from-primary to-transparent"
-          animate={{ opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+          className="w-[3px] h-16 bg-primary ml-auto"
+          style={{ boxShadow: '0 0 10px hsl(0 85% 50%)' }}
+          animate={{ opacity: [0.6, 1, 0.6] }}
+          transition={{ duration: 1.5, repeat: Infinity, delay: 0.4 }}
         />
       </div>
-      <div className="fixed bottom-6 right-6 z-10 flex flex-col items-end">
+      <div className="fixed bottom-4 left-4 z-10">
         <motion.div 
-          className="w-[3px] h-20 bg-gradient-to-t from-primary to-transparent ml-auto"
-          animate={{ opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity, delay: 1.5 }}
+          className="w-[3px] h-16 bg-primary"
+          style={{ boxShadow: '0 0 10px hsl(0 85% 50%)' }}
+          animate={{ opacity: [0.6, 1, 0.6] }}
+          transition={{ duration: 1.5, repeat: Infinity, delay: 0.8 }}
         />
         <motion.div 
-          className="w-20 h-[3px] bg-gradient-to-l from-primary to-transparent"
-          animate={{ opacity: [0.5, 1, 0.5] }}
-          transition={{ duration: 2, repeat: Infinity, delay: 1.5 }}
+          className="w-16 h-[3px] bg-primary"
+          style={{ boxShadow: '0 0 10px hsl(0 85% 50%)' }}
+          animate={{ opacity: [0.6, 1, 0.6] }}
+          transition={{ duration: 1.5, repeat: Infinity, delay: 0.8 }}
+        />
+      </div>
+      <div className="fixed bottom-4 right-4 z-10 flex flex-col items-end">
+        <motion.div 
+          className="w-[3px] h-16 bg-primary ml-auto"
+          style={{ boxShadow: '0 0 10px hsl(0 85% 50%)' }}
+          animate={{ opacity: [0.6, 1, 0.6] }}
+          transition={{ duration: 1.5, repeat: Infinity, delay: 1.2 }}
+        />
+        <motion.div 
+          className="w-16 h-[3px] bg-primary"
+          style={{ boxShadow: '0 0 10px hsl(0 85% 50%)' }}
+          animate={{ opacity: [0.6, 1, 0.6] }}
+          transition={{ duration: 1.5, repeat: Infinity, delay: 1.2 }}
         />
       </div>
 
-      {/* Pulsing center glow */}
+      {/* Center pulsing glow */}
       <motion.div
-        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full"
+        className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] rounded-full pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, hsl(0 85% 45% / 0.06) 0%, transparent 50%)',
-          filter: 'blur(60px)',
+          background: 'radial-gradient(circle, hsl(0 85% 50% / 0.12) 0%, transparent 60%)',
+          filter: 'blur(40px)',
         }}
         animate={{
-          scale: [1, 1.3, 1],
-          opacity: [0.3, 0.6, 0.3],
+          scale: [1, 1.4, 1],
+          opacity: [0.5, 0.8, 0.5],
         }}
-        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
       />
     </div>
   );
