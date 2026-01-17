@@ -6,8 +6,8 @@ import { Briefcase, ExternalLink } from 'lucide-react';
 const experiences = [
   {
     title: 'Data Visualization Virtual Intern',
-    company: 'Tata Group',
-    period: 'Aug 2024',
+    company: 'Tata Consultancy Services',
+    period: 'Aug 2025',
     description: [
       'Completed a job simulation involving creating data visualizations for Tata Consultancy Services',
       'Prepared questions for a meeting with client senior leadership',
@@ -17,7 +17,7 @@ const experiences = [
   },
   {
     title: 'Machine Learning Virtual Intern',
-    company: 'Genz.ai',
+    company: 'Genz (MSME Approved)',
     period: 'May 2025',
     description: [
       'Completed a comprehensive internship focused on core machine learning concepts including Supervised & Unsupervised Learning, Neural Networks, and Model Evaluation.',
