@@ -1,13 +1,11 @@
 import { motion } from 'framer-motion';
 import SectionHeading from '../SectionHeading';
-import SectionBackground from '../SectionBackground';
 import HoverCard from '../HoverCard';
 import { GraduationCap } from 'lucide-react';
 
 const EducationSection = () => {
   return (
     <section id="education" className="py-24 px-4 relative">
-      <SectionBackground variant="alternate" />
       
       <div className="max-w-4xl mx-auto relative">
         <SectionHeading title="EDUCATION" />

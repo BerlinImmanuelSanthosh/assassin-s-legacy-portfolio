@@ -1,13 +1,11 @@
 import { motion } from 'framer-motion';
 import SectionHeading from '../SectionHeading';
-import SectionBackground from '../SectionBackground';
 import HoverCard from '../HoverCard';
 import { ExternalLink, Bot } from 'lucide-react';
 
 const ProjectSection = () => {
   return (
     <section id="project" className="py-24 px-4 relative">
-      <SectionBackground variant="default" />
       
       <div className="max-w-4xl mx-auto relative">
         <SectionHeading title="PROJECT" />

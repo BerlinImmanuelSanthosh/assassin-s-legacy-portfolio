@@ -1,13 +1,11 @@
 import { motion } from 'framer-motion';
 import SectionHeading from '../SectionHeading';
-import SectionBackground from '../SectionBackground';
 import HoverCard from '../HoverCard';
 import { MapPin, Mail, Linkedin } from 'lucide-react';
 
 const SummarySection = () => {
   return (
     <section id="summary" className="py-24 px-4 relative">
-      <SectionBackground variant="default" />
       
       <div className="max-w-4xl mx-auto relative">
         <SectionHeading title="SUMMARY" />

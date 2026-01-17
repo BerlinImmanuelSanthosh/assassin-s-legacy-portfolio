@@ -1,38 +1,36 @@
 import { motion } from 'framer-motion';
 import SectionHeading from '../SectionHeading';
-import SectionBackground from '../SectionBackground';
 import HoverCard from '../HoverCard';
 import { Briefcase, ExternalLink } from 'lucide-react';
 
-const ExperienceSection = () => {
-  const experiences = [
-    {
-      title: 'Virtual Intern',
-      organization: 'TATA CONSULTANCY SERVICES',
-      date: 'June-2025',
-      points: [
-        'Completed a simulation involving creating data visualizations for Tata Consultancy Services',
-        'Prepared questions for a meeting with client senior leadership',
-        'Created visuals for data analysis to help executives with effective decision making',
-      ],
-      proofLink: 'https://github.com/BerlinImmanuelSanthosh/Certificates/blob/main/Tata%20internship%20Data%20Visualization.pdf',
-    },
-    {
-      title: 'Machine Learning Virtual Intern',
-      organization: 'GENZ EDUCATE WING (MSME APPROVED)',
-      date: 'August-2025',
-      points: [
-        'Completed a hands-on Machine Learning internship using Python, working on real-world data and models.',
-        'Built and evaluated ML workflows while staying consistently engaged throughout the internship period.',
-        'Recognized for exceptional performance, curiosity, and active problem-solving during the program.',
-      ],
-      proofLink: 'https://github.com/BerlinImmanuelSanthosh/Certificates/blob/main/Genzinternship.jpg',
-    },
-  ];
+const experiences = [
+  {
+    title: 'Data Visualization Virtual Intern',
+    company: 'Tata Group',
+    period: 'Aug 2024',
+    description: [
+      'Completed a job simulation involving creating data visualizations for Tata Consultancy Services',
+      'Prepared questions for a meeting with client senior leadership',
+      'Created visuals for data analysis to help executives with effective decision making',
+    ],
+    proofLink: 'https://github.com/BerlinImmanuelSanthosh/Certificates/blob/main/Tata%20internship%20Data%20Visualization.pdf',
+  },
+  {
+    title: 'Machine Learning Virtual Intern',
+    company: 'Genz.ai',
+    period: 'May 2025',
+    description: [
+      'Completed a comprehensive internship focused on core machine learning concepts including Supervised & Unsupervised Learning, Neural Networks, and Model Evaluation.',
+      'Built and evaluated ML workflows while staying consistently engaged throughout the internship period.',
+      'Recognized for exceptional performance, curiosity, and active problem-solving during the program.',
+    ],
+    proofLink: 'https://github.com/BerlinImmanuelSanthosh/Certificates/blob/main/Genzinternship.jpg',
+  },
+];
 
+const ExperienceSection = () => {
   return (
     <section id="experience" className="py-24 px-4 relative">
-      <SectionBackground variant="alternate" />
 
       <div className="max-w-4xl mx-auto relative">
         <SectionHeading title="EXPERIENCE" />
