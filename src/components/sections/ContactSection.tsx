@@ -1,35 +1,33 @@
 import { motion } from 'framer-motion';
 import SectionHeading from '../SectionHeading';
-import SectionBackground from '../SectionBackground';
 import HoverCard from '../HoverCard';
 import MagneticButton from '../MagneticButton';
 import { Mail, MapPin, Linkedin, Send } from 'lucide-react';
 
-const ContactSection = () => {
-  const contactInfo = [
-    {
-      icon: Mail,
-      label: 'E.Mail',
-      value: 'j.berlin.santhosh@gmail.com',
-      href: 'mailto:j.berlin.santhosh@gmail.com',
-    },
-    {
-      icon: MapPin,
-      label: 'Location',
-      value: 'Mylapore, Chennai',
-      href: null,
-    },
-    {
-      icon: Linkedin,
-      label: 'LinkedIn',
-      value: 'www.linkedin.com/in/berlin-imman',
-      href: 'https://www.linkedin.com/in/berlin-imman',
-    },
-  ];
+const contactInfo = [
+  {
+    icon: Mail,
+    label: 'Email',
+    value: 'j.berlin.santhosh@gmail.com',
+    href: 'mailto:j.berlin.santhosh@gmail.com',
+  },
+  {
+    icon: MapPin,
+    label: 'Location',
+    value: 'Mylapore, Chennai',
+    href: null,
+  },
+  {
+    icon: Linkedin,
+    label: 'LinkedIn',
+    value: 'linkedin.com/in/berlin-imman',
+    href: 'https://www.linkedin.com/in/berlin-imman',
+  },
+];
 
+const ContactSection = () => {
   return (
     <section id="contact" className="py-24 px-4 relative">
-      <SectionBackground variant="default" />
       
       <div className="max-w-4xl mx-auto relative">
         <SectionHeading title="CONTACT" />

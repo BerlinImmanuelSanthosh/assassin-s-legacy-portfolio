@@ -112,6 +112,12 @@ const HeroSection = () => {
             View Project
           </MagneticButton>
           <MagneticButton 
+            href="/resume.pdf"
+            className="!bg-primary/90 border-2 border-primary"
+          >
+            Resume
+          </MagneticButton>
+          <MagneticButton 
             href="mailto:j.berlin.santhosh@gmail.com"
             className="!bg-transparent border-2 border-primary hover:border-primary/80"
           >

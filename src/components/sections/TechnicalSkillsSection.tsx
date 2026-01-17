@@ -1,23 +1,19 @@
 import { motion } from 'framer-motion';
 import SectionHeading from '../SectionHeading';
-import SectionBackground from '../SectionBackground';
 import HoverCard from '../HoverCard';
 
-const TechnicalSkillsSection = () => {
-  const skills = [
-    'Python - Machine Learning, Data Science',
-    'Mongo DB',
-    'Structured Query Language (SQL)',
-    'Azure ML',
-    'Java, JavaScript',
-    'Data Structures And Algorithms',
-    'Data Visualization: Matplotlib, Seaborn, PowerBI, Tableau',
-    'TensorFlow, PyTorch',
-  ];
+const skills = [
+  { category: 'Programming Languages', items: ['Python', 'JavaScript', 'R'] },
+  { category: 'AI/ML Tools', items: ['TensorFlow', 'PyTorch', 'Scikit-learn', 'Pandas', 'NumPy'] },
+  { category: 'Web Technologies', items: ['React', 'Node.js', 'HTML/CSS', 'REST APIs'] },
+  { category: 'Data Visualization', items: ['Matplotlib', 'Seaborn', 'Plotly', 'Power BI'] },
+  { category: 'Databases', items: ['MongoDB', 'MySQL', 'PostgreSQL'] },
+  { category: 'Tools & Platforms', items: ['Git', 'Docker', 'AWS', 'Google Cloud'] },
+];
 
+const TechnicalSkillsSection = () => {
   return (
     <section id="technical-skills" className="py-24 px-4 relative">
-      <SectionBackground variant="default" />
 
       <div className="max-w-4xl mx-auto relative">
         <SectionHeading title="TECHNICAL SKILLS" />

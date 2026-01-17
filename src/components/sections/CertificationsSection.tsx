@@ -1,40 +1,38 @@
 import { motion } from 'framer-motion';
 import SectionHeading from '../SectionHeading';
-import SectionBackground from '../SectionBackground';
 import HoverCard from '../HoverCard';
 import { Award, ExternalLink } from 'lucide-react';
 
-const CertificationsSection = () => {
-  const certifications = [
-    {
-      name: 'Deploying SAP on Google Cloud, Gemini for Application Developers, Introduction to Responsible AI',
-      org: 'Google Cloud',
-      year: '2025',
-      link: 'https://github.com/BerlinImmanuelSanthosh/Certificates/blob/main/Google%20Cloud%20Courses.pdf',
-    },
-    {
-      name: 'Database Management System',
-      org: 'MongoDB',
-      year: '2025',
-      link: 'https://github.com/BerlinImmanuelSanthosh/Certificates/blob/main/Berlin%20Immanuel%20Santhosh.J%20Mongo%20DB%20Certificates.pdf',
-    },
-    {
-      name: 'Fundamentals Of Machine Learning And AI',
-      org: 'AWS',
-      year: '2025',
-      link: 'https://github.com/BerlinImmanuelSanthosh/Certificates/blob/main/Fundamentals%20Of%20MAchine%20Learning.pdf',
-    },
-    {
-      name: 'Foundations Of Prompt Engineering',
-      org: 'AWS',
-      year: '2025',
-      link: 'https://github.com/BerlinImmanuelSanthosh/Certificates/blob/main/PromptEngineeringCertificate.PNG',
-    },
-  ];
+const certifications = [
+  {
+    name: 'Deploying SAP on Google Cloud, Gemini for Application Developers, Introduction to Responsible AI',
+    org: 'Google Cloud',
+    year: '2025',
+    link: 'https://github.com/BerlinImmanuelSanthosh/Certificates/blob/main/Google%20Cloud%20Courses.pdf',
+  },
+  {
+    name: 'Database Management System',
+    org: 'MongoDB',
+    year: '2025',
+    link: 'https://github.com/BerlinImmanuelSanthosh/Certificates/blob/main/Berlin%20Immanuel%20Santhosh.J%20Mongo%20DB%20Certificates.pdf',
+  },
+  {
+    name: 'Fundamentals Of Machine Learning And AI',
+    org: 'AWS',
+    year: '2025',
+    link: 'https://github.com/BerlinImmanuelSanthosh/Certificates/blob/main/Fundamentals%20Of%20MAchine%20Learning.pdf',
+  },
+  {
+    name: 'Foundations Of Prompt Engineering',
+    org: 'AWS',
+    year: '2025',
+    link: 'https://github.com/BerlinImmanuelSanthosh/Certificates/blob/main/PromptEngineeringCertificate.PNG',
+  },
+];
 
+const CertificationsSection = () => {
   return (
     <section id="certifications" className="py-24 px-4 relative">
-      <SectionBackground variant="alternate" />
       
       <div className="max-w-4xl mx-auto relative">
         <SectionHeading title="CERTIFICATIONS" />

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import CustomCursor from '@/components/CustomCursor';
-import AnimatedBackground from '@/components/AnimatedBackground';
+import ParallaxBackground from '@/components/ParallaxBackground';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/sections/HeroSection';
 import SummarySection from '@/components/sections/SummarySection';
@@ -28,7 +28,7 @@ const Index = () => {
 
       {/* Main Content */}
       <motion.div 
-        className="min-h-screen bg-background text-foreground overflow-x-hidden noise-overlay"
+        className="min-h-screen bg-background text-foreground overflow-x-hidden"
         initial={{ opacity: 0 }}
         animate={{ opacity: showIntro ? 0 : 1 }}
         transition={{ duration: 0.5, delay: 0.3 }}
@@ -38,21 +38,8 @@ const Index = () => {
           <CustomCursor />
         </div>
 
-        {/* Animated background with parallax orbs */}
-        <AnimatedBackground />
-
-        {/* Grid overlay - optimized */}
-        <div 
-          className="fixed inset-0 pointer-events-none opacity-20"
-          style={{
-            backgroundImage: `
-              linear-gradient(hsl(0 0% 0% / 0.03) 1px, transparent 1px),
-              linear-gradient(90deg, hsl(0 0% 0% / 0.03) 1px, transparent 1px)
-            `,
-            backgroundSize: '50px 50px',
-            willChange: 'transform',
-          }}
-        />
+        {/* Continuous parallax background */}
+        <ParallaxBackground />
 
         {/* Navigation */}
         <Navbar />
