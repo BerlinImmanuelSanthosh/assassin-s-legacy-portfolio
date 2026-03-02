@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 
 interface HakiTransitionProps {
   isActive: boolean;
@@ -7,64 +7,85 @@ interface HakiTransitionProps {
 }
 
 const HakiTransition = ({ isActive, onComplete }: HakiTransitionProps) => {
+  // Use useEffect with timer for reliable completion
+  useEffect(() => {
+    if (!isActive) return;
+    const timer = setTimeout(() => {
+      onComplete();
+    }, 800);
+    return () => clearTimeout(timer);
+  }, [isActive, onComplete]);
+
   return (
     <AnimatePresence>
       {isActive && (
         <motion.div
-          className="fixed inset-0 z-[9999] pointer-events-none"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          className="fixed inset-0 z-[9999]"
+          initial={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          transition={{ duration: 0.1 }}
-          onAnimationComplete={() => {
-            // Trigger navigation after impact peak
-          }}
+          transition={{ duration: 0.3 }}
         >
-          {/* Impact flash - white burst */}
+          {/* Full white flash impact */}
           <motion.div
-            className="absolute inset-0 bg-background"
+            className="absolute inset-0 bg-white"
             initial={{ opacity: 0 }}
             animate={{
-              opacity: [0, 0.1, 1, 1, 0],
+              opacity: [0, 0, 1, 1, 0.8, 0],
             }}
-            transition={{ duration: 0.6, times: [0, 0.1, 0.15, 0.5, 1], ease: 'easeOut' }}
+            transition={{ duration: 0.8, times: [0, 0.05, 0.1, 0.2, 0.5, 1], ease: 'easeOut' }}
+          />
+
+          {/* Dark haki vignette */}
+          <motion.div
+            className="absolute inset-0"
+            style={{
+              background: 'radial-gradient(circle at center, transparent 0%, hsl(0 85% 15% / 0.95) 50%, hsl(0 0% 0%) 100%)',
+            }}
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: [0, 0, 0.95, 0.95, 0],
+            }}
+            transition={{ duration: 0.8, times: [0, 0.12, 0.18, 0.55, 1] }}
           />
 
           {/* Radial shockwave rings */}
           {[0, 1, 2].map((i) => (
             <motion.div
               key={`ring-${i}`}
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border-2"
+              className="absolute top-1/2 left-1/2 rounded-full"
               style={{
-                borderColor: `hsl(0 85% 40% / ${0.8 - i * 0.2})`,
-                boxShadow: `0 0 ${30 - i * 8}px hsl(0 85% 40% / ${0.5 - i * 0.15})`,
+                borderWidth: `${4 - i}px`,
+                borderStyle: 'solid',
+                borderColor: `hsl(0 85% ${40 + i * 10}% / ${0.9 - i * 0.2})`,
+                boxShadow: `0 0 ${40 - i * 10}px hsl(0 85% 40% / ${0.6 - i * 0.15}), inset 0 0 ${20 - i * 5}px hsl(0 85% 40% / ${0.3 - i * 0.1})`,
+                transform: 'translate(-50%, -50%)',
               }}
               initial={{ width: 0, height: 0, opacity: 1 }}
               animate={{
-                width: [0, 3000],
-                height: [0, 3000],
+                width: [0, 4000],
+                height: [0, 4000],
                 opacity: [1, 0],
               }}
               transition={{
-                duration: 0.5,
-                delay: i * 0.08,
+                duration: 0.6,
+                delay: i * 0.06,
                 ease: 'easeOut',
               }}
             />
           ))}
 
-          {/* Impact lines - radial burst */}
-          {[...Array(12)].map((_, i) => {
-            const angle = (360 / 12) * i;
+          {/* Impact burst lines - radial */}
+          {[...Array(16)].map((_, i) => {
+            const angle = (360 / 16) * i;
             return (
               <motion.div
                 key={`line-${i}`}
                 className="absolute top-1/2 left-1/2 origin-left"
                 style={{
-                  width: '150vmax',
-                  height: '3px',
+                  width: '200vmax',
+                  height: i % 2 === 0 ? '4px' : '2px',
                   transform: `rotate(${angle}deg)`,
-                  background: `linear-gradient(90deg, hsl(0 85% 40%), transparent)`,
+                  background: `linear-gradient(90deg, hsl(0 0% 100%), hsl(0 85% 50%), transparent 60%)`,
                 }}
                 initial={{ scaleX: 0, opacity: 1 }}
                 animate={{
@@ -72,51 +93,38 @@ const HakiTransition = ({ isActive, onComplete }: HakiTransitionProps) => {
                   opacity: [1, 0],
                 }}
                 transition={{
-                  duration: 0.35,
-                  delay: 0.05,
+                  duration: 0.4,
+                  delay: 0.03,
                   ease: 'easeOut',
                 }}
               />
             );
           })}
 
-          {/* Red/dark vignette overlay - the "haki" color */}
-          <motion.div
-            className="absolute inset-0"
-            style={{
-              background: 'radial-gradient(circle at center, transparent 0%, hsl(0 85% 15% / 0.9) 60%, hsl(0 0% 0%) 100%)',
-            }}
-            initial={{ opacity: 0 }}
-            animate={{
-              opacity: [0, 0, 0.9, 0.9, 0],
-            }}
-            transition={{ duration: 0.8, times: [0, 0.1, 0.2, 0.6, 1] }}
-            onAnimationComplete={onComplete}
-          />
-
-          {/* Speed lines inward - impact frames */}
-          {[...Array(20)].map((_, i) => {
-            const angle = Math.random() * 360;
-            const distance = 40 + Math.random() * 60;
+          {/* Speed lines - inward rush */}
+          {[...Array(24)].map((_, i) => {
+            const angle = (360 / 24) * i + Math.random() * 10;
+            const length = 80 + Math.random() * 150;
+            const thickness = 2 + Math.random() * 4;
             return (
               <motion.div
                 key={`speed-${i}`}
                 className="absolute top-1/2 left-1/2"
                 style={{
-                  width: `${3 + Math.random() * 4}px`,
-                  height: `${60 + Math.random() * 120}px`,
-                  background: `linear-gradient(180deg, transparent, hsl(0 0% 100% / ${0.4 + Math.random() * 0.4}), transparent)`,
-                  transform: `rotate(${angle}deg) translateY(-${distance}vh)`,
+                  width: `${thickness}px`,
+                  height: `${length}px`,
+                  background: `linear-gradient(180deg, transparent, hsl(0 0% 100% / ${0.5 + Math.random() * 0.5}), hsl(0 85% 50% / 0.3), transparent)`,
+                  transform: `rotate(${angle}deg) translateY(-${35 + Math.random() * 25}vh)`,
                   transformOrigin: 'center center',
                 }}
                 initial={{ opacity: 0, scaleY: 0 }}
                 animate={{
                   opacity: [0, 1, 0],
-                  scaleY: [0, 1, 0.5],
+                  scaleY: [0, 1.2, 0.3],
                 }}
                 transition={{
-                  duration: 0.3,
-                  delay: 0.05 + Math.random() * 0.1,
+                  duration: 0.35,
+                  delay: 0.02 + Math.random() * 0.08,
                   ease: 'easeOut',
                 }}
               />
@@ -124,32 +132,47 @@ const HakiTransition = ({ isActive, onComplete }: HakiTransitionProps) => {
           })}
 
           {/* Screen crack / fracture lines */}
-          {[...Array(6)].map((_, i) => {
-            const startAngle = (60 * i) + Math.random() * 30;
+          {[...Array(8)].map((_, i) => {
+            const startAngle = (45 * i) + (Math.random() - 0.5) * 20;
             return (
               <motion.div
                 key={`crack-${i}`}
                 className="absolute top-1/2 left-1/2 origin-left"
                 style={{
-                  width: '120vmax',
-                  height: '2px',
+                  width: '150vmax',
+                  height: i % 2 === 0 ? '3px' : '2px',
                   transform: `rotate(${startAngle}deg)`,
-                  background: `linear-gradient(90deg, hsl(0 0% 100%), hsl(0 85% 40% / 0.8), transparent)`,
-                  filter: 'blur(0.5px)',
+                  background: `linear-gradient(90deg, hsl(0 0% 100% / 0.9), hsl(0 85% 50% / 0.7), transparent 40%)`,
+                  filter: 'blur(0.3px)',
                 }}
                 initial={{ scaleX: 0, opacity: 0 }}
                 animate={{
-                  scaleX: [0, 1, 1],
+                  scaleX: [0, 1.2, 1],
                   opacity: [0, 1, 0],
                 }}
                 transition={{
-                  duration: 0.4,
-                  delay: 0.02 + i * 0.02,
+                  duration: 0.35,
+                  delay: 0.01 + i * 0.015,
                   ease: 'easeOut',
                 }}
               />
             );
           })}
+
+          {/* Center impact point glow */}
+          <motion.div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
+            style={{
+              background: 'radial-gradient(circle, hsl(0 0% 100%) 0%, hsl(0 85% 50%) 30%, transparent 70%)',
+            }}
+            initial={{ width: 0, height: 0, opacity: 1 }}
+            animate={{
+              width: [0, 300, 600],
+              height: [0, 300, 600],
+              opacity: [1, 0.8, 0],
+            }}
+            transition={{ duration: 0.5, ease: 'easeOut' }}
+          />
         </motion.div>
       )}
     </AnimatePresence>
@@ -168,9 +191,8 @@ export const useHakiTransition = () => {
 
   const handleComplete = useCallback(() => {
     if (pendingUrl) {
-      window.open(pendingUrl, '_self');
+      window.location.href = pendingUrl;
     }
-    // Small delay before cleanup
     setTimeout(() => {
       setIsActive(false);
       setPendingUrl(null);
