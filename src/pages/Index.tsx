@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import CustomCursor from '@/components/CustomCursor';
-import ParallaxBackground from '@/components/ParallaxBackground';
+import NanotechBackground from '@/components/NanotechBackground';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/sections/HeroSection';
 import SummarySection from '@/components/sections/SummarySection';
@@ -19,32 +19,26 @@ const Index = () => {
 
   return (
     <>
-      {/* Intro Screen */}
       <AnimatePresence>
         {showIntro && (
           <IntroScreen onComplete={() => setShowIntro(false)} />
         )}
       </AnimatePresence>
 
-      {/* Main Content */}
       <motion.div 
         className="min-h-screen bg-background text-foreground overflow-x-hidden"
         initial={{ opacity: 0 }}
         animate={{ opacity: showIntro ? 0 : 1 }}
         transition={{ duration: 0.5, delay: 0.3 }}
       >
-        {/* Custom cursor - hidden on mobile */}
         <div className="hidden md:block">
           <CustomCursor />
         </div>
 
-        {/* Continuous parallax background */}
-        <ParallaxBackground />
+        <NanotechBackground />
 
-        {/* Navigation */}
         <Navbar />
 
-        {/* Main content - Order matches resume exactly */}
         <main>
           <HeroSection />
           <SummarySection />
@@ -56,7 +50,6 @@ const Index = () => {
           <ContactSection />
         </main>
 
-        {/* Footer */}
         <Footer />
       </motion.div>
     </>

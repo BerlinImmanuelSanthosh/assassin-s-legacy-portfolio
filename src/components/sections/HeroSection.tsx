@@ -2,8 +2,11 @@ import { motion } from 'framer-motion';
 import TypewriterText from '../TypewriterText';
 import MagneticButton from '../MagneticButton';
 import { ChevronDown, Linkedin, Mail } from 'lucide-react';
+import HakiTransition, { useHakiTransition } from '../HakiTransition';
 
 const HeroSection = () => {
+  const { isActive, triggerTransition, handleComplete } = useHakiTransition();
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -30,6 +33,8 @@ const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 pb-8">
+      <HakiTransition isActive={isActive} onComplete={handleComplete} />
+
       {/* Background gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background pointer-events-none" />
 
@@ -65,14 +70,12 @@ const HeroSection = () => {
         initial="hidden"
         animate="visible"
       >
-        {/* Glitch intro text */}
         <motion.div variants={itemVariants} className="mb-4">
           <span className="font-mono text-primary text-sm tracking-[0.3em] uppercase">
             [ SYSTEM INITIALIZED ]
           </span>
         </motion.div>
 
-        {/* Name */}
         <motion.h1
           variants={itemVariants}
           className="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-6"
@@ -82,7 +85,6 @@ const HeroSection = () => {
           <span className="text-gradient-red glow-text">IMMANUEL SANTHOSH</span>
         </motion.h1>
 
-        {/* Animated role */}
         <motion.div
           variants={itemVariants}
           className="text-2xl md:text-3xl font-body text-muted-foreground mb-8 h-12"
@@ -95,7 +97,6 @@ const HeroSection = () => {
           />
         </motion.div>
 
-        {/* Summary from resume */}
         <motion.p
           variants={itemVariants}
           className="text-base text-muted-foreground max-w-2xl mx-auto mb-8 font-body leading-relaxed"
@@ -103,7 +104,6 @@ const HeroSection = () => {
           Pre-final year B.Tech student in AI and Data Science with experience in Python, JavaScript, and R for data analysis. Built AI projects, including a learning organizer chatbot that creates study plans, multilingual answers, and structured notes from one prompt.
         </motion.p>
 
-        {/* CTA Buttons */}
         <motion.div
           variants={itemVariants}
           className="flex flex-wrap justify-center gap-4 mb-8"
@@ -112,13 +112,13 @@ const HeroSection = () => {
             View Project
           </MagneticButton>
           <MagneticButton 
-            href="/resume.pdf"
+            onClick={() => triggerTransition('/resume.pdf')}
             className="!bg-primary/90 border-2 border-primary"
           >
             Resume
           </MagneticButton>
           <MagneticButton 
-            href="mailto:j.berlin.santhosh@gmail.com"
+            onClick={() => triggerTransition('mailto:j.berlin.santhosh@gmail.com')}
             className="!bg-transparent border-2 border-primary hover:border-primary/80"
           >
             <Mail className="w-4 h-4" />
@@ -126,7 +126,6 @@ const HeroSection = () => {
           </MagneticButton>
         </motion.div>
 
-        {/* Social links */}
         <motion.div
           variants={itemVariants}
           className="flex justify-center gap-6 mb-16"
@@ -135,23 +134,20 @@ const HeroSection = () => {
             { icon: Linkedin, href: 'https://www.linkedin.com/in/berlin-imman', label: 'LinkedIn' },
             { icon: Mail, href: 'mailto:j.berlin.santhosh@gmail.com', label: 'Email' },
           ].map(({ icon: Icon, href, label }) => (
-            <motion.a
+            <motion.button
               key={label}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
+              onClick={() => triggerTransition(href)}
               className="p-3 rounded-full glass-card text-muted-foreground hover:text-primary transition-colors"
               whileHover={{ scale: 1.1, y: -3 }}
               whileTap={{ scale: 0.95 }}
               aria-label={label}
             >
               <Icon className="w-5 h-5" />
-            </motion.a>
+            </motion.button>
           ))}
         </motion.div>
       </motion.div>
 
-      {/* Scroll indicator */}
       <motion.div
         className="absolute bottom-8 left-1/2 -translate-x-1/2"
         initial={{ opacity: 0, y: -20 }}
