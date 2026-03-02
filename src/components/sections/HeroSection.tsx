@@ -35,8 +35,8 @@ const HeroSection = () => {
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 pb-8">
       <HakiTransition isActive={isActive} onComplete={handleComplete} />
 
-      {/* Background gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background pointer-events-none" />
+      {/* Background gradient overlay - semi-transparent to show nanotech */}
+      <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background/80 pointer-events-none" />
 
       {/* Animated lines */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
