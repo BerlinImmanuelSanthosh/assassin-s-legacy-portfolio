@@ -43,7 +43,6 @@ const Navbar = () => {
         }`}
       >
         <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-          {/* Logo */}
           <motion.a
             href="#"
             onClick={(e) => {
@@ -56,7 +55,6 @@ const Navbar = () => {
             BIS
           </motion.a>
 
-          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
             {navItems.map((item) => (
               <motion.button
@@ -71,7 +69,6 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Mobile menu button */}
           <motion.button
             className="md:hidden p-2 text-foreground"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -82,7 +79,6 @@ const Navbar = () => {
         </div>
       </motion.nav>
 
-      {/* Mobile menu */}
       <motion.div
         initial={false}
         animate={{
@@ -92,7 +88,7 @@ const Navbar = () => {
         transition={{ duration: 0.3 }}
         className="fixed inset-0 z-40 md:hidden"
       >
-        <div className="absolute inset-0 bg-background/95 backdrop-blur-lg" />
+        <div className="absolute inset-0 glass-card" />
         <div className="relative h-full flex flex-col items-center justify-center gap-6">
           {navItems.map((item, index) => (
             <motion.button

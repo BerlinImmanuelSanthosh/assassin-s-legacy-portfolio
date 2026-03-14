@@ -89,8 +89,7 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
         }}
         className="group relative"
       >
-        <div className="relative overflow-hidden rounded-xl bg-card/60 backdrop-blur-2xl border border-border/50 hover:border-primary/40 transition-all duration-500">
-          {/* Animated gradient border glow on hover */}
+        <div className="relative overflow-hidden rounded-xl glass-card hover:border-primary/40 transition-all duration-500">
           <motion.div
             className="absolute -inset-[1px] rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
             style={{
@@ -100,9 +99,7 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
             }}
           />
 
-          {/* Header with icon and floating particles */}
           <div className={`relative p-6 pb-4 bg-gradient-to-br ${project.color}`}>
-            {/* Nano-hex pattern overlay */}
             <svg className="absolute inset-0 w-full h-full opacity-10" preserveAspectRatio="none">
               <defs>
                 <pattern id={`hex-${index}`} width="30" height="26" patternUnits="userSpaceOnUse">
@@ -128,7 +125,6 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
                 </div>
               </div>
 
-              {/* Status indicator */}
               <div className="flex items-center gap-1.5">
                 <motion.div
                   className="w-2 h-2 rounded-full bg-primary"
@@ -139,7 +135,6 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
               </div>
             </div>
 
-            {/* Tech tags */}
             <div className="flex flex-wrap gap-2 mt-4">
               {project.tech.map((t) => (
                 <motion.span
@@ -153,7 +148,6 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
             </div>
           </div>
 
-          {/* Description */}
           <div className="p-6 pt-4 space-y-3">
             {project.description.map((desc, i) => (
               <motion.div
@@ -175,7 +169,6 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
             ))}
           </div>
 
-          {/* Footer with link */}
           <div className="px-6 pb-6">
             <motion.button
               onClick={() => triggerTransition(project.link)}
@@ -189,7 +182,6 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
             </motion.button>
           </div>
 
-          {/* Corner HUD decorations */}
           <div className="absolute top-0 right-0">
             <div className="w-6 h-[2px] bg-primary/40 absolute top-2 right-2" />
             <div className="w-[2px] h-6 bg-primary/40 absolute top-2 right-2" />

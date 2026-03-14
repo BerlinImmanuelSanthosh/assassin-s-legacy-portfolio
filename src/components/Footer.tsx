@@ -7,7 +7,7 @@ const Footer = () => {
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
-      className="py-8 px-4 border-t border-border/30"
+      className="py-8 px-4 border-t border-border/30 glass-card"
     >
       <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
         <p className="font-mono text-sm text-muted-foreground">

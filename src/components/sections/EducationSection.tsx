@@ -6,7 +6,6 @@ import { GraduationCap } from 'lucide-react';
 const EducationSection = () => {
   return (
     <section id="education" className="py-24 px-4 relative">
-      
       <div className="max-w-4xl mx-auto relative">
         <SectionHeading title="EDUCATION" />
 
@@ -18,12 +17,11 @@ const EducationSection = () => {
         >
           <HoverCard>
             <div
-              className="relative overflow-hidden bg-card/80 backdrop-blur-xl border border-border"
+              className="relative overflow-hidden glass-card"
               style={{
                 clipPath: 'polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px))',
               }}
             >
-              {/* Corner accents */}
               <div className="absolute top-0 right-0 w-8 h-8">
                 <div className="absolute top-0 right-[20px] w-6 h-[2px] bg-primary opacity-50" />
                 <div className="absolute top-[20px] right-0 w-[2px] h-6 bg-primary opacity-50" />
@@ -60,7 +58,6 @@ const EducationSection = () => {
                 </div>
               </div>
 
-              {/* Corner dots */}
               <div className="absolute top-3 left-3 w-1.5 h-1.5 bg-primary/60" />
               <div className="absolute bottom-3 right-3 w-1.5 h-1.5 bg-primary/60" />
             </div>

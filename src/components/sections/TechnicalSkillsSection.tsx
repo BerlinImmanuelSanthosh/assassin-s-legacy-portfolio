@@ -14,7 +14,6 @@ const skills = [
 const TechnicalSkillsSection = () => {
   return (
     <section id="technical-skills" className="py-24 px-4 relative">
-
       <div className="max-w-4xl mx-auto relative">
         <SectionHeading title="TECHNICAL SKILLS" />
 
@@ -24,14 +23,12 @@ const TechnicalSkillsSection = () => {
           viewport={{ once: true }}
         >
           <HoverCard>
-            {/* Tech card container */}
             <div 
-              className="relative overflow-hidden bg-card/80 backdrop-blur-xl border border-border"
+              className="relative overflow-hidden glass-card"
               style={{
                 clipPath: 'polygon(0 0, calc(100% - 24px) 0, 100% 24px, 100% 100%, 24px 100%, 0 calc(100% - 24px))',
               }}
             >
-              {/* Corner accents */}
               <div className="absolute top-0 right-0 w-10 h-10">
                 <div className="absolute top-0 right-[24px] w-8 h-[2px] bg-primary" />
                 <div className="absolute top-[24px] right-0 w-[2px] h-8 bg-primary" />
@@ -78,7 +75,6 @@ const TechnicalSkillsSection = () => {
                 </div>
               </div>
 
-              {/* Corner dots */}
               <div className="absolute top-3 left-3 w-1.5 h-1.5 bg-primary/60" />
               <div className="absolute bottom-3 right-3 w-1.5 h-1.5 bg-primary/60" />
             </div>

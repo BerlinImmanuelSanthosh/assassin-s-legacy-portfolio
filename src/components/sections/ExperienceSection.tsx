@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import SectionHeading from '../SectionHeading';
 import HoverCard from '../HoverCard';
 import { Briefcase, ExternalLink } from 'lucide-react';
+import HakiTransition, { useHakiTransition } from '../HakiTransition';
 
 const experiences = [
   {
@@ -29,15 +30,16 @@ const experiences = [
 ];
 
 const ExperienceSection = () => {
+  const { isActive, triggerTransition, handleComplete } = useHakiTransition();
+
   return (
     <section id="experience" className="py-24 px-4 relative">
+      <HakiTransition isActive={isActive} onComplete={handleComplete} />
 
       <div className="max-w-4xl mx-auto relative">
         <SectionHeading title="EXPERIENCE" />
 
-        {/* Timeline */}
         <div className="relative">
-          {/* Timeline line */}
           <div className="absolute left-0 md:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-primary/50 to-transparent" />
 
           {experiences.map((exp, index) => (
@@ -49,7 +51,6 @@ const ExperienceSection = () => {
               transition={{ duration: 0.6, delay: index * 0.2 }}
               className="relative pl-12 md:pl-20 mb-12"
             >
-              {/* Timeline dot */}
               <motion.div
                 className="absolute left-0 md:left-8 w-4 h-4 bg-primary transform -translate-x-1/2 z-10"
                 style={{ clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)' }}
@@ -66,15 +67,13 @@ const ExperienceSection = () => {
                 />
               </motion.div>
 
-              {/* Content - Tech Card Style with HoverCard */}
               <HoverCard>
                 <div
-                  className="relative overflow-hidden bg-card/80 backdrop-blur-xl border border-border"
+                  className="relative overflow-hidden glass-card"
                   style={{
                     clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px))',
                   }}
                 >
-                  {/* Corner accents */}
                   <div className="absolute top-0 right-0 w-6 h-6">
                     <div className="absolute top-0 right-[16px] w-4 h-[2px] bg-primary opacity-50" />
                     <div className="absolute top-[16px] right-0 w-[2px] h-4 bg-primary opacity-50" />
@@ -116,19 +115,16 @@ const ExperienceSection = () => {
                       ))}
                     </ul>
 
-                    <motion.a
-                      href={exp.proofLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
+                    <motion.button
+                      onClick={() => triggerTransition(exp.proofLink)}
                       className="inline-flex items-center gap-2 text-primary font-mono text-xs hover:underline"
                       whileHover={{ x: 3 }}
                     >
                       <ExternalLink className="w-3 h-3" />
                       Proof of Completion
-                    </motion.a>
+                    </motion.button>
                   </div>
 
-                  {/* Corner dots */}
                   <div className="absolute top-2 left-2 w-1 h-1 bg-primary/60" />
                   <div className="absolute bottom-2 right-2 w-1 h-1 bg-primary/60" />
                 </div>
