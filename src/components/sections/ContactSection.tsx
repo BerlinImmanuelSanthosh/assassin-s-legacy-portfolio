@@ -3,6 +3,7 @@ import SectionHeading from '../SectionHeading';
 import HoverCard from '../HoverCard';
 import MagneticButton from '../MagneticButton';
 import { Mail, MapPin, Linkedin, Send } from 'lucide-react';
+import HakiTransition, { useHakiTransition } from '../HakiTransition';
 
 const contactInfo = [
   {
@@ -26,8 +27,11 @@ const contactInfo = [
 ];
 
 const ContactSection = () => {
+  const { isActive, triggerTransition, handleComplete } = useHakiTransition();
+
   return (
     <section id="contact" className="py-24 px-4 relative">
+      <HakiTransition isActive={isActive} onComplete={handleComplete} />
       
       <div className="max-w-4xl mx-auto relative">
         <SectionHeading title="CONTACT" />
@@ -43,16 +47,13 @@ const ContactSection = () => {
             >
               <HoverCard>
                 {info.href ? (
-                  <a
-                    href={info.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex flex-col items-center p-6 relative overflow-hidden bg-card/80 backdrop-blur-xl border border-border transition-all text-center group"
+                  <button
+                    onClick={() => triggerTransition(info.href!)}
+                    className="flex flex-col items-center w-full p-6 relative overflow-hidden glass-card transition-all text-center group"
                     style={{
                       clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px))',
                     }}
                   >
-                    {/* Corner accents */}
                     <div className="absolute top-0 right-0 w-6 h-6">
                       <div className="absolute top-0 right-[16px] w-4 h-[2px] bg-primary opacity-50 group-hover:opacity-100 transition-opacity" />
                       <div className="absolute top-[16px] right-0 w-[2px] h-4 bg-primary opacity-50 group-hover:opacity-100 transition-opacity" />
@@ -73,18 +74,16 @@ const ContactSection = () => {
                       {info.value}
                     </p>
 
-                    {/* Corner dots */}
                     <div className="absolute top-2 left-2 w-1 h-1 bg-primary/60" />
                     <div className="absolute bottom-2 right-2 w-1 h-1 bg-primary/60" />
-                  </a>
+                  </button>
                 ) : (
                   <div 
-                    className="flex flex-col items-center p-6 relative overflow-hidden bg-card/80 backdrop-blur-xl border border-border text-center"
+                    className="flex flex-col items-center p-6 relative overflow-hidden glass-card text-center"
                     style={{
                       clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px))',
                     }}
                   >
-                    {/* Corner accents */}
                     <div className="absolute top-0 right-0 w-6 h-6">
                       <div className="absolute top-0 right-[16px] w-4 h-[2px] bg-primary opacity-50" />
                       <div className="absolute top-[16px] right-0 w-[2px] h-4 bg-primary opacity-50" />
@@ -103,7 +102,6 @@ const ContactSection = () => {
                     <p className="font-mono text-xs text-muted-foreground mb-1">{info.label}</p>
                     <p className="font-body text-sm text-foreground">{info.value}</p>
 
-                    {/* Corner dots */}
                     <div className="absolute top-2 left-2 w-1 h-1 bg-primary/60" />
                     <div className="absolute bottom-2 right-2 w-1 h-1 bg-primary/60" />
                   </div>
@@ -119,7 +117,7 @@ const ContactSection = () => {
           viewport={{ once: true }}
           className="flex justify-center"
         >
-          <MagneticButton href="mailto:j.berlin.santhosh@gmail.com">
+          <MagneticButton onClick={() => triggerTransition('mailto:j.berlin.santhosh@gmail.com')}>
             <Send className="w-4 h-4" />
             Send Message
           </MagneticButton>

@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import SectionHeading from '../SectionHeading';
 import HoverCard from '../HoverCard';
 import { Award, ExternalLink } from 'lucide-react';
+import HakiTransition, { useHakiTransition } from '../HakiTransition';
 
 const certifications = [
   {
@@ -31,8 +32,11 @@ const certifications = [
 ];
 
 const CertificationsSection = () => {
+  const { isActive, triggerTransition, handleComplete } = useHakiTransition();
+
   return (
     <section id="certifications" className="py-24 px-4 relative">
+      <HakiTransition isActive={isActive} onComplete={handleComplete} />
       
       <div className="max-w-4xl mx-auto relative">
         <SectionHeading title="CERTIFICATIONS" />
@@ -47,16 +51,13 @@ const CertificationsSection = () => {
               transition={{ delay: index * 0.1 }}
             >
               <HoverCard>
-                <a
-                  href={cert.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block relative overflow-hidden bg-card/80 backdrop-blur-xl border border-border group"
+                <button
+                  onClick={() => triggerTransition(cert.link)}
+                  className="block w-full text-left relative overflow-hidden glass-card group"
                   style={{
                     clipPath: 'polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px))',
                   }}
                 >
-                  {/* Corner accents */}
                   <div className="absolute top-0 right-0 w-6 h-6">
                     <div className="absolute top-0 right-[16px] w-4 h-[2px] bg-primary opacity-50 group-hover:opacity-100 transition-opacity" />
                     <div className="absolute top-[16px] right-0 w-[2px] h-4 bg-primary opacity-50 group-hover:opacity-100 transition-opacity" />
@@ -90,10 +91,9 @@ const CertificationsSection = () => {
                     </div>
                   </div>
 
-                  {/* Corner dots */}
                   <div className="absolute top-2 left-2 w-1 h-1 bg-primary/60" />
                   <div className="absolute bottom-2 right-2 w-1 h-1 bg-primary/60" />
-                </a>
+                </button>
               </HoverCard>
             </motion.div>
           ))}

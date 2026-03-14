@@ -3,7 +3,6 @@ import { useEffect, useRef, memo, useCallback } from 'react';
 const NanotechBackground = memo(() => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number>(0);
-  const mouseRef = useRef({ x: -1000, y: -1000 });
   const particlesRef = useRef<Particle[]>([]);
 
   interface Particle {
@@ -17,7 +16,11 @@ const NanotechBackground = memo(() => {
     pulse: number;
     pulseSpeed: number;
     hexPhase: number;
-    assembled: boolean;
+    orbitAngle: number;
+    orbitSpeed: number;
+    orbitRadius: number;
+    originX: number;
+    originY: number;
   }
 
   const createParticles = useCallback((width: number, height: number) => {
@@ -25,18 +28,24 @@ const NanotechBackground = memo(() => {
     const particles: Particle[] = [];
     for (let i = 0; i < count; i++) {
       const baseSize = 2 + Math.random() * 3;
+      const ox = Math.random() * width;
+      const oy = Math.random() * height;
       particles.push({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.4,
-        vy: (Math.random() - 0.5) * 0.4,
+        x: ox,
+        y: oy,
+        vx: (Math.random() - 0.5) * 0.3,
+        vy: (Math.random() - 0.5) * 0.3,
         size: baseSize,
         baseSize,
         opacity: 0.4 + Math.random() * 0.5,
         pulse: Math.random() * Math.PI * 2,
         pulseSpeed: 0.015 + Math.random() * 0.025,
         hexPhase: Math.random() * Math.PI * 2,
-        assembled: false,
+        orbitAngle: Math.random() * Math.PI * 2,
+        orbitSpeed: 0.002 + Math.random() * 0.006,
+        orbitRadius: 20 + Math.random() * 60,
+        originX: ox,
+        originY: oy,
       });
     }
     return particles;
@@ -62,15 +71,8 @@ const NanotechBackground = memo(() => {
 
     resize();
 
-    const handleMouse = (e: MouseEvent) => {
-      mouseRef.current.x = e.clientX;
-      mouseRef.current.y = e.clientY;
-    };
-
     window.addEventListener('resize', resize, { passive: true });
-    window.addEventListener('mousemove', handleMouse, { passive: true });
 
-    // Theme colors: hsl(0 85% 40%) = rgb(189, 15, 15) approx
     const pR = 189, pG = 15, pB = 15;
 
     const drawHexagon = (cx: number, cy: number, r: number, opacity: number, rotation: number) => {
@@ -93,14 +95,12 @@ const NanotechBackground = memo(() => {
       ctx.translate(cx, cy);
       ctx.rotate(Math.PI / 4);
       
-      // Glow
       ctx.shadowColor = `rgba(${pR}, ${pG}, ${pB}, ${opacity * 0.8})`;
       ctx.shadowBlur = size * 4;
       
       ctx.fillStyle = `rgba(${pR}, ${pG}, ${pB}, ${opacity})`;
       ctx.fillRect(-size / 2, -size / 2, size, size);
       
-      // Inner bright core
       const coreSize = size * 0.4;
       ctx.fillStyle = `rgba(255, ${100 + Math.floor(opacity * 80)}, ${100 + Math.floor(opacity * 80)}, ${opacity * 0.8})`;
       ctx.fillRect(-coreSize / 2, -coreSize / 2, coreSize, coreSize);
@@ -111,11 +111,9 @@ const NanotechBackground = memo(() => {
     const animate = () => {
       ctx.clearRect(0, 0, width, height);
       const particles = particlesRef.current;
-      const mx = mouseRef.current.x;
-      const my = mouseRef.current.y;
       const time = performance.now() * 0.001;
 
-      // Draw connections first (behind particles)
+      // Draw connections
       const connectionDist = 160;
       const connectionDistSq = connectionDist * connectionDist;
       
@@ -127,8 +125,6 @@ const NanotechBackground = memo(() => {
           if (distSq < connectionDistSq) {
             const dist = Math.sqrt(distSq);
             const opacity = (1 - dist / connectionDist) * 0.35;
-            
-            // Nanotech lattice style - pulsing connections
             const pulse = Math.sin(time * 2 + i * 0.1) * 0.15 + 0.85;
             
             ctx.beginPath();
@@ -138,7 +134,7 @@ const NanotechBackground = memo(() => {
             ctx.lineWidth = opacity > 0.15 ? 1 : 0.5;
             ctx.stroke();
             
-            // Data flow dots along connections
+            // Data flow dots
             if (opacity > 0.2 && Math.random() < 0.02) {
               const t = (time * 0.5 + i * 0.1) % 1;
               const flowX = particles[i].x + (particles[j].x - particles[i].x) * t;
@@ -152,80 +148,55 @@ const NanotechBackground = memo(() => {
         }
       }
 
-      // Update and draw particles
+      // Update and draw particles — autonomous orbit movement
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i];
 
-        // Drift
-        p.x += p.vx;
-        p.y += p.vy;
+        // Orbit around origin point
+        p.orbitAngle += p.orbitSpeed;
+        p.x = p.originX + Math.cos(p.orbitAngle) * p.orbitRadius + p.vx * Math.sin(time * 0.5 + i);
+        p.y = p.originY + Math.sin(p.orbitAngle) * p.orbitRadius + p.vy * Math.cos(time * 0.5 + i);
 
-        // Wrap
-        if (p.x < -20) p.x = width + 20;
-        if (p.x > width + 20) p.x = -20;
-        if (p.y < -20) p.y = height + 20;
-        if (p.y > height + 20) p.y = -20;
+        // Slowly drift origins
+        p.originX += Math.sin(time * 0.1 + i * 0.3) * 0.1;
+        p.originY += Math.cos(time * 0.1 + i * 0.5) * 0.1;
+
+        // Wrap origins
+        if (p.originX < -40) p.originX = width + 40;
+        if (p.originX > width + 40) p.originX = -40;
+        if (p.originY < -40) p.originY = height + 40;
+        if (p.originY > height + 40) p.originY = -40;
 
         // Pulse
         p.pulse += p.pulseSpeed;
         const pulseFactor = 0.7 + 0.3 * Math.sin(p.pulse);
 
-        // Mouse interaction - nanotech assembly
-        const dx = mx - p.x;
-        const dy = my - p.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        const mouseRadius = 250;
+        const finalOpacity = Math.min(1, p.opacity * pulseFactor);
+        const finalSize = p.baseSize * pulseFactor;
 
-        let extraSize = 0;
-        let extraOpacity = 0;
-
-        if (dist < mouseRadius) {
-          const influence = 1 - dist / mouseRadius;
-          const force = influence * influence;
-          
-          // Particles assemble toward cursor like nanotech
-          p.vx += dx * force * 0.003;
-          p.vy += dy * force * 0.003;
-          extraOpacity = force * 0.4;
-          extraSize = force * 4;
-          p.assembled = dist < mouseRadius * 0.5;
-          
-          // Speed limit
-          const speed = Math.sqrt(p.vx * p.vx + p.vy * p.vy);
-          if (speed > 2.5) {
-            p.vx *= 2.5 / speed;
-            p.vy *= 2.5 / speed;
-          }
-        } else {
-          p.assembled = false;
-          p.vx *= 0.995;
-          p.vy *= 0.995;
-        }
-
-        const finalOpacity = Math.min(1, (p.opacity + extraOpacity) * pulseFactor);
-        const finalSize = (p.baseSize + extraSize) * pulseFactor;
-
-        // Draw nano-hex shell around assembled particles
-        if (p.assembled || finalSize > 3.5) {
+        // Draw hex shell for larger particles
+        if (finalSize > 3.5) {
           p.hexPhase += 0.008;
-          const hexRadius = finalSize * (p.assembled ? 4 : 3);
-          drawHexagon(p.x, p.y, hexRadius, finalOpacity * 0.5, p.hexPhase);
-          
-          // Second rotating hex layer for assembled particles
-          if (p.assembled) {
-            drawHexagon(p.x, p.y, hexRadius * 1.4, finalOpacity * 0.25, -p.hexPhase * 0.5);
-          }
+          const hexRadius = finalSize * 3;
+          drawHexagon(p.x, p.y, hexRadius, finalOpacity * 0.4, p.hexPhase);
         }
 
-        // Draw the diamond particle
+        // Periodically "assemble" clusters autonomously
+        const clusterPhase = Math.sin(time * 0.3 + i * 0.7);
+        if (clusterPhase > 0.8) {
+          const hexRadius = finalSize * 4;
+          drawHexagon(p.x, p.y, hexRadius, finalOpacity * 0.5, p.hexPhase);
+          drawHexagon(p.x, p.y, hexRadius * 1.4, finalOpacity * 0.2, -p.hexPhase * 0.5);
+        }
+
         drawDiamond(p.x, p.y, finalSize, finalOpacity);
       }
 
       // Nanotech assembly wave ripples from center
       const waveSpeed = 120;
-      for (let w = 0; w < 2; w++) {
-        const waveRadius = ((time * waveSpeed + w * 500) % (Math.max(width, height) * 1.8));
-        const waveOpacity = Math.max(0, 0.12 - waveRadius / (Math.max(width, height) * 15));
+      for (let w = 0; w < 3; w++) {
+        const waveRadius = ((time * waveSpeed + w * 400) % (Math.max(width, height) * 1.8));
+        const waveOpacity = Math.max(0, 0.15 - waveRadius / (Math.max(width, height) * 12));
         if (waveOpacity > 0.01) {
           ctx.beginPath();
           ctx.arc(width / 2, height / 2, waveRadius, 0, Math.PI * 2);
@@ -233,16 +204,6 @@ const NanotechBackground = memo(() => {
           ctx.lineWidth = 2;
           ctx.stroke();
         }
-      }
-
-      // Mouse glow aura
-      if (mx > 0 && my > 0) {
-        const gradient = ctx.createRadialGradient(mx, my, 0, mx, my, 200);
-        gradient.addColorStop(0, `rgba(${pR}, ${pG}, ${pB}, 0.08)`);
-        gradient.addColorStop(0.5, `rgba(${pR}, ${pG}, ${pB}, 0.03)`);
-        gradient.addColorStop(1, 'transparent');
-        ctx.fillStyle = gradient;
-        ctx.fillRect(mx - 200, my - 200, 400, 400);
       }
 
       animationRef.current = requestAnimationFrame(animate);
@@ -253,7 +214,6 @@ const NanotechBackground = memo(() => {
     return () => {
       cancelAnimationFrame(animationRef.current);
       window.removeEventListener('resize', resize);
-      window.removeEventListener('mousemove', handleMouse);
     };
   }, [createParticles]);
 
