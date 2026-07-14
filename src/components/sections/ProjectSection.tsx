@@ -1,7 +1,7 @@
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import SectionHeading from '../SectionHeading';
-import { ExternalLink, Bot, GraduationCap, HeartPulse, Github } from 'lucide-react';
+import { ExternalLink, Bot, GraduationCap, HeartPulse, Github, Globe } from 'lucide-react';
 import HakiTransition, { useHakiTransition } from '../HakiTransition';
 
 const projects = [
@@ -44,6 +44,19 @@ const projects = [
       'OCR for prescription reading and medication understanding.',
       'Intelligent chatbot for health recommendations and medical guidance.',
       'Combines symptom analysis, scanning, and AI into one platform.',
+    ],
+  },
+  {
+    title: 'NEUROBROWSE',
+    subtitle: 'Autonomous Browser Agent (Groq + Playwright)',
+    icon: Globe,
+    color: 'from-primary/20 to-accent/25',
+    link: 'https://github.com/BerlinImmanuelSanthosh/NeuroBrowse',
+    tech: ['LLaMA 3.3-70B', 'Groq', 'Playwright', 'Agentic AI'],
+    description: [
+      'Built an autonomous AI agent using LLaMA 3.3-70B and Playwright, automating multi-step browser tasks directly from natural language instructions with zero manual input.',
+      'Applied chain-of-thought reasoning, DOM-aware element targeting, and stuck-loop recovery for reliable execution across dynamic, unpredictable web pages.',
+      'Open-sourced on GitHub, showcasing scalable agentic AI architecture, prompt engineering, and production-grade software design suited for real-world deployment.',
     ],
   },
 ];
