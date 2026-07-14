@@ -6,6 +6,17 @@ import HakiTransition, { useHakiTransition } from '../HakiTransition';
 
 const experiences = [
   {
+    title: 'AI/LLM Developer',
+    company: 'Iconic Hub',
+    period: 'Feb 2026 – May 2026',
+    description: [
+      'Built a FastAPI backend integrating Groq LLMs with streaming inference, PDF ingestion, and document retrieval for an EdTech platform.',
+      'Automated grading using LLM-based question generation and semantic similarity scoring, boosting efficiency by 40% over a 4-month tenure.',
+      'Shipped SSE streaming, multilingual NLP support, and concurrent request handling using async Python and REST API best practices in production.',
+    ],
+    proofLink: '',
+  },
+  {
     title: 'Data Visualization Virtual Intern',
     company: 'Tata Consultancy Services',
     period: 'Aug 2025',
@@ -115,14 +126,16 @@ const ExperienceSection = () => {
                       ))}
                     </ul>
 
-                    <motion.button
-                      onClick={() => triggerTransition(exp.proofLink)}
-                      className="inline-flex items-center gap-2 text-primary font-mono text-xs hover:underline"
-                      whileHover={{ x: 3 }}
-                    >
-                      <ExternalLink className="w-3 h-3" />
-                      Proof of Completion
-                    </motion.button>
+                    {exp.proofLink && (
+                      <motion.button
+                        onClick={() => triggerTransition(exp.proofLink)}
+                        className="inline-flex items-center gap-2 text-primary font-mono text-xs hover:underline"
+                        whileHover={{ x: 3 }}
+                      >
+                        <ExternalLink className="w-3 h-3" />
+                        Proof of Completion
+                      </motion.button>
+                    )}
                   </div>
 
                   <div className="absolute top-2 left-2 w-1 h-1 bg-primary/60" />
