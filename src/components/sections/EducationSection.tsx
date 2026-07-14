@@ -52,7 +52,7 @@ const EducationSection = () => {
                       className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10"
                       style={{ clipPath: 'polygon(8px 0, 100% 0, calc(100% - 8px) 100%, 0 100%)' }}
                     >
-                      <span className="font-mono text-sm text-primary font-semibold">CGPA - 8.81</span>
+                      <span className="font-mono text-sm text-primary font-semibold">CGPA - 8.95</span>
                     </div>
                   </div>
                 </div>
