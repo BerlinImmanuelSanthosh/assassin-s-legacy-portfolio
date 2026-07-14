@@ -38,7 +38,11 @@ const SummarySection = () => {
 
               <div className="relative z-10 p-8">
                 <p className="text-lg text-muted-foreground font-body leading-relaxed mb-8">
-                  Pre-final year B.Tech student in AI and Data Science with experience in Python, JavaScript, and R for data analysis. Built AI projects, including a learning organizer chatbot that creates study plans, multilingual answers, and structured notes from one prompt. Worked on exploratory data analysis and data visualization using real-world datasets during industry internships. Able to translate technical concepts into clear solutions, with interest in applied AI, Machine Learning, and data-driven problem solving.
+                  AI/ML Developer with hands-on experience in machine learning, deep learning, NLP, LLMs, and computer vision. Skilled at
+building and deploying end-to-end AI pipelines, agentic AI systems, and RAG-based applications. Delivered production tools with
+measurable results, including 94% prediction accuracy and 40% efficiency gains. Experienced across the full ML lifecycle, from
+model training and fine-tuning to API integration and deployment. Strong foundation in Python, FastAPI, and cloud-based
+MLOps workflows. Worked on exploratory data analysis and data visualization using real-world datasets during industry internships. Able to translate technical concepts into clear solutions, with interest in applied AI, Machine Learning, and data-driven problem solving.
                 </p>
 
                 <div className="flex flex-wrap gap-6">
