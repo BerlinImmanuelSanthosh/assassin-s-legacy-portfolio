@@ -3,12 +3,11 @@ import SectionHeading from '../SectionHeading';
 import HoverCard from '../HoverCard';
 
 const skills = [
-  { category: 'Programming Languages', items: ['Python', 'JavaScript', 'R'] },
-  { category: 'AI/ML Tools', items: ['TensorFlow', 'PyTorch', 'Scikit-learn', 'Pandas', 'NumPy'] },
-  { category: 'Web Technologies', items: ['React', 'Node.js', 'HTML/CSS', 'REST APIs'] },
-  { category: 'Data Visualization', items: ['Matplotlib', 'Seaborn', 'Plotly', 'Power BI'] },
-  { category: 'Databases', items: ['MongoDB', 'MySQL', 'PostgreSQL'] },
-  { category: 'Tools & Platforms', items: ['Git', 'Docker', 'AWS', 'Google Cloud'] },
+  { category: 'Languages', items: ['Python', 'SQL'] },
+  { category: 'ML/DL', items: ['TensorFlow', 'PyTorch', 'Keras', 'scikit-learn', 'XGBoost', 'LightGBM', 'Feature Engineering', 'Hyperparameter Tuning'] },
+  { category: 'Generative AI & LLMs', items: ['LLM Integration', 'Prompt Engineering', 'RAG', 'LangChain', 'Hugging Face', 'OpenAI API', 'Groq'] },
+  { category: 'NLP & CV', items: ['NLP', 'OCR', 'NER', 'Text Classification', 'Sentiment Analysis', 'Computer Vision'] },
+  { category: 'MLOps & Cloud', items: ['FastAPI', 'REST APIs', 'MLflow', 'AWS', 'Azure ML', 'MongoDB', 'Git', 'Docker'] },
 ];
 
 const TechnicalSkillsSection = () => {
