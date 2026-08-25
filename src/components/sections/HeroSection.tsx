@@ -101,7 +101,7 @@ const HeroSection = () => {
           variants={itemVariants}
           className="text-base text-muted-foreground max-w-2xl mx-auto mb-8 font-body leading-relaxed"
         >
-          Pre-final year B.Tech student in AI and Data Science with experience in Python, JavaScript, and R for data analysis. Built AI projects, including a learning organizer chatbot that creates study plans, multilingual answers, and structured notes from one prompt.
+          Final-year B.Tech Artificial Intelligence and Data Science student skilled in machine learning, deep learning, NLP, LLMs, and computer vision. Proficient in building AI pipelines, agentic systems, and RAG applications, delivering 94% prediction accuracy and 40% efficiency gains. Strong foundation in Python, FastAPI, and cloud-based MLOps workflows.
         </motion.p>
 
         <motion.div
